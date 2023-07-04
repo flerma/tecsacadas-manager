@@ -1,14 +1,14 @@
 package com.tecsacadas.tecsacadasmanager.domain.model;
 
 
-import javax.persistence.*;
-
 import com.tecsacadas.tecsacadasmanager.domain.enuns.EstadoEnum;
 import com.tecsacadas.tecsacadasmanager.dto.ClienteDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 
 @Data
 @Entity
@@ -49,6 +49,7 @@ public class Cliente {
                 .id(id)
                 .nome(nome)
                 .cpf(cpf)
+                .rg(rg)
                 .email(email)
                 .telefone(telefone)
                 .endereco(endereco)

@@ -1,6 +1,8 @@
 package com.tecsacadas.tecsacadasmanager.service;
 
 import com.tecsacadas.tecsacadasmanager.domain.model.Cliente;
+import com.tecsacadas.tecsacadasmanager.dto.ClienteDto;
+import com.tecsacadas.tecsacadasmanager.exception.BusinessException;
 import com.tecsacadas.tecsacadasmanager.repository.ClienteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,21 +20,27 @@ public class ClienteService {
         return clienteRepository.findAll();
     }
 
-    public Optional<Cliente> buscarPorId(Long id) {
-        return clienteRepository.findById(id);
+    public Optional<ClienteDto> buscarPorId(Long id) {
+        return clienteRepository.findById(id)
+                .map(Cliente::toDto);
     }
 
-    public Cliente criar(Cliente cliente) {
-        return clienteRepository.save(cliente);
+    public ClienteDto criar(ClienteDto cliente) {
+        Optional<Cliente> clienteExistente = clienteRepository.findByCpf(cliente.getCpf());
+        if (clienteExistente.isPresent()) {
+            throw new BusinessException("Cliente já existe com o cpf: " + cliente.getCpf());
+        } else {
+            return clienteRepository.save(cliente.toModel()).toDto();
+        }
     }
 
-    public Cliente atualizar(Long id, Cliente clienteAtualizado) {
+    public ClienteDto atualizar(Long id, ClienteDto clienteAtualizado) {
         Optional<Cliente> clienteExistente = clienteRepository.findById(id);
         if (clienteExistente.isPresent()) {
             clienteAtualizado.setId(id);
-            return clienteRepository.save(clienteAtualizado);
+            return clienteRepository.save(clienteAtualizado.toModel()).toDto();
         } else {
-            throw new RuntimeException("Cliente não encontrado com o ID: " + id);
+            throw new BusinessException("Cliente não encontrado com o ID: " + id);
         }
     }
 
@@ -41,7 +49,7 @@ public class ClienteService {
         if (clienteExistente.isPresent()) {
             clienteRepository.deleteById(id);
         } else {
-            throw new RuntimeException("Cliente não encontrado com o ID: " + id);
+            throw new BusinessException("Cliente não encontrado com o ID: " + id);
         }
     }
 }
