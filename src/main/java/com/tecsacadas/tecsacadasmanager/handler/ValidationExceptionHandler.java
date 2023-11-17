@@ -23,7 +23,7 @@ public class ValidationExceptionHandler {
 
         List<String> errors = fieldErrors.stream()
                 .map(error -> error.getField() + ": " + error.getDefaultMessage())
-                .collect(Collectors.toList());
+                .toList();
 
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST, "Erro de validação", errors);
 

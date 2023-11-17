@@ -1,4 +1,4 @@
-package com.tecsacadas.tecsacadasmanager.domain.enuns;
+package com.tecsacadas.tecsacadasmanager.domain.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

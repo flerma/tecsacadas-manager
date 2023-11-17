@@ -42,3 +42,12 @@ ALTER TABLE realizado_servicos
 
 ALTER TABLE realizado_servicos
     ADD CONSTRAINT fk_realizado_servicos_servico FOREIGN KEY (servico_id) REFERENCES servico (id);
+
+ALTER TABLE usuario_grupo
+    ADD CONSTRAINT fk_usuario_grupo_usuario FOREIGN KEY (usuario_id) REFERENCES usuario (id);
+
+ALTER TABLE usuario_grupo
+    ADD CONSTRAINT fk_usuario_grupo_grupo FOREIGN KEY (grupo_id) REFERENCES grupo (id);
+
+ALTER TABLE grupo_permissao
+    ADD CONSTRAINT fk_grupo_permissao_grupo FOREIGN KEY (grupo_id) REFERENCES grupo (id);

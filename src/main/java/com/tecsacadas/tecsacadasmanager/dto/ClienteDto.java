@@ -1,6 +1,6 @@
 package com.tecsacadas.tecsacadasmanager.dto;
 
-import com.tecsacadas.tecsacadasmanager.domain.enuns.EstadoEnum;
+import com.tecsacadas.tecsacadasmanager.domain.enums.EstadoEnum;
 import com.tecsacadas.tecsacadasmanager.domain.model.Cliente;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
