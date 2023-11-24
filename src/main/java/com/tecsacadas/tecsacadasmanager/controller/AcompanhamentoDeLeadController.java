@@ -21,9 +21,15 @@ public class AcompanhamentoDeLeadController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/conversoes-por-ano-mes")
-    public ResponseEntity<Void> gerarConversoesPorAnoMes() {
-        acompanhamentoLeadsService.gerarConversoesPorAnoMes();
+    @GetMapping("/todos-relatorios/{ano}/{mes}")
+    public ResponseEntity<Void> gerarTodosRelatorios(@PathVariable Integer ano, @PathVariable Integer mes) {
+        acompanhamentoLeadsService.gerarTodosRelatorios(ano, mes);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/conversoes-por-ano-mes/{ano}")
+    public ResponseEntity<Void> gerarConversoesPorAnoMes(@PathVariable Integer ano) {
+        acompanhamentoLeadsService.gerarConversoesPorAnoMes(ano);
         return ResponseEntity.ok().build();
     }
 

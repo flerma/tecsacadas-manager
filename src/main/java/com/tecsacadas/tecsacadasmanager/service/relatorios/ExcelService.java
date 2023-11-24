@@ -50,13 +50,17 @@ public class ExcelService {
         }
     }
 
-    public void salvarArquivo(Workbook workbook, String nomeArquivo) throws IOException {
-        File currDir = new File(".");
-        String path = currDir.getAbsolutePath();
-        String fileLocation = path.substring(0, path.length() - 1) + nomeArquivo;
-        FileOutputStream outputStream = new FileOutputStream(fileLocation);
-        workbook.write(outputStream);
-        workbook.close();
+    public void salvarArquivo(Workbook workbook, String nomeArquivo) {
+        try {
+            File currDir = new File(".");
+            String path = currDir.getAbsolutePath();
+            String fileLocation = path.substring(0, path.length() - 1) + nomeArquivo;
+            FileOutputStream outputStream = new FileOutputStream(fileLocation);
+            workbook.write(outputStream);
+            workbook.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private CellStyle criarHeaderStyle(Workbook workbook) {

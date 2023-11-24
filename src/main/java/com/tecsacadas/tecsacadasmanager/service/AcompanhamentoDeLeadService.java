@@ -11,6 +11,7 @@ import com.tecsacadas.tecsacadasmanager.service.relatorios.LeadInvalidoXValidoPo
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class AcompanhamentoDeLeadService {
     private final DiasSemanaComMaisConversoesAnoService diasSemanaComMaisConversoesAnoService;
     private final DiasSemanaComMaisConversoesMesService diasSemanaComMaisConversoesMesService;
     private final ConversoesPorAnoMesService conversoesPorAnoMesService;
-    private final ConversoesPorAnoMesSemana conversoesPorAnoMesSemana;
+    private final ConversoesPorAnoMesSemana conversoesPorAnoMesSemanaService;
     private final LeadInvalidoXValidoPorMesAnoService leadInvalidoXValidoPorMesAnoService;
     private final ImportacaoArquivoLeadsService importacaoArquivoLeadsService;
 
@@ -37,6 +38,15 @@ public class AcompanhamentoDeLeadService {
         acompanhamentoLeadRepository.saveAll(acompanhamentoLeadList);
     }
 
+    public void gerarTodosRelatorios(Integer ano, Integer mes) {
+        Mono.when(conversoesPorAnoMesService.gerar(ano),
+                  conversoesPorAnoMesSemanaService.gerar(ano),
+                  diasSemanaComMaisConversoesAnoService.gerar(ano),
+                  leadInvalidoXValidoPorMesAnoService.gerar(ano, mes),
+                  diasSemanaComMaisConversoesMesService.gerar(ano, mes))
+                .subscribe();
+    }
+
     public void gerarDiasSemanaComMaisConversoesAno(Integer ano) {
         diasSemanaComMaisConversoesAnoService.gerar(ano);
     }
@@ -45,12 +55,12 @@ public class AcompanhamentoDeLeadService {
         diasSemanaComMaisConversoesMesService.gerar(ano, mes);
     }
 
-    public void gerarConversoesPorAnoMes() {
-        conversoesPorAnoMesService.gerar();
+    public void gerarConversoesPorAnoMes(Integer ano) {
+        conversoesPorAnoMesService.gerar(ano);
     }
 
     public void gerarConversoesPorAnoMesSemana(Integer ano) {
-        conversoesPorAnoMesSemana.gerar(ano);
+        conversoesPorAnoMesSemanaService.gerar(ano);
     }
 
     public void gerarLeadsValidosXInvalidosPorAnoMes(Integer ano, Integer mes) {
