@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class ConversoesPorMesAnoSemanaDto {
 
     private Integer ano;
-    private String mes;
+    private Integer mes;
     private String semana;
     private Long conversoes;
 }

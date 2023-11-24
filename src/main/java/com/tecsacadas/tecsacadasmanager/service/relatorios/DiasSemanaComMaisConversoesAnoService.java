@@ -23,16 +23,18 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class DiasSemanaComMaisConversoesAnoService {
 
+    public static final String NOME_ARQUIVO = "RelatorioDiasSemanaComMaisConversoesAno_%s.xlsx";
+    public static final String NOME_PLANILHA = "Relatório";
     private DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     private final AcompanhamentoLeadRepository acompanhamentoLeadRepository;
 
     @SneakyThrows
-    public void gerar(String ano) {
+    public void gerar(Integer ano) {
 
         Workbook workbook = new XSSFWorkbook();
 
-        Sheet sheet = workbook.createSheet("Dias da semana com mais conversões ano");
+        Sheet sheet = workbook.createSheet(NOME_PLANILHA);
         sheet.setColumnWidth(0, 3000);
         sheet.setColumnWidth(1, 6000);
         sheet.setColumnWidth(2, 7000);
@@ -63,7 +65,7 @@ public class DiasSemanaComMaisConversoesAnoService {
         headerCell.setCellStyle(headerStyle);
 
         var conversoesPorMesAno = acompanhamentoLeadRepository.findDiasSemanaComMaisConversoesAno(ano);
-        var conversoesPorMesAnoLimitado = conversoesPorMesAno.stream().limit(10).collect(Collectors.toList());
+        var conversoesPorMesAnoLimitado = conversoesPorMesAno.stream().limit(10).toList();
 
         var i = 0;
         for (var diasSemanaComMaisConversoesMes : conversoesPorMesAnoLimitado) {
@@ -87,7 +89,7 @@ public class DiasSemanaComMaisConversoesAnoService {
 
         File currDir = new File(".");
         String path = currDir.getAbsolutePath();
-        String fileLocation = path.substring(0, path.length() - 1) + "RelatorioDiasSemanaComMaisConversoesAno_" + ano + ".xlsx";
+        String fileLocation = path.substring(0, path.length() - 1) + String.format(NOME_ARQUIVO, ano);
 
         FileOutputStream outputStream = new FileOutputStream(fileLocation);
         workbook.write(outputStream);

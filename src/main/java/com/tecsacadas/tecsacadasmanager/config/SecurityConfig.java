@@ -1,7 +1,8 @@
 package com.tecsacadas.tecsacadasmanager.config;
 
 import com.tecsacadas.tecsacadasmanager.security.CustomUserDetailsService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -11,12 +12,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+@Slf4j
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private CustomUserDetailsService userDetailsService;
+    private final CustomUserDetailsService userDetailsService;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -26,9 +28,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+                .antMatchers("/**").permitAll()
                 .antMatchers("/clientes/**").hasRole("USER")
                 .antMatchers("/clientes/**").hasRole("ADMIN")
-                .antMatchers("/**").permitAll()
                 .antMatchers("/actuator/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
@@ -43,6 +45,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     public static void main(String[] args) {
-        System.out.println(new BCryptPasswordEncoder().encode("123456"));
+        log.info("Senha: {}", new BCryptPasswordEncoder().encode("123456"));
     }
 }

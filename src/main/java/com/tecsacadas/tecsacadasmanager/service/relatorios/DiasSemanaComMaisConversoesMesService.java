@@ -23,16 +23,18 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class DiasSemanaComMaisConversoesMesService {
 
+    public static final String NOME_PLANILHA = "Relatório";
+    public static final String NOME_ARQUIVO = "RelatorioDiasSemanaComMaisConversoesAno_%s_Mes_%s.xlsx";
     private DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     private final AcompanhamentoLeadRepository acompanhamentoLeadRepository;
 
     @SneakyThrows
-    public void gerar(String mes) {
+    public void gerar(Integer ano, Integer mes) {
 
         Workbook workbook = new XSSFWorkbook();
 
-        Sheet sheet = workbook.createSheet("Dias da semana com mais conversões mês");
+        Sheet sheet = workbook.createSheet(NOME_PLANILHA);
         sheet.setColumnWidth(0, 3000);
         sheet.setColumnWidth(1, 6000);
         sheet.setColumnWidth(2, 7000);
@@ -62,8 +64,8 @@ public class DiasSemanaComMaisConversoesMesService {
         headerCell.setCellValue("Total de Conversões");
         headerCell.setCellStyle(headerStyle);
 
-        var conversoesPorMesAno = acompanhamentoLeadRepository.findDiasSemanaComMaisConversoesMes(mes);
-        var conversoesPorMesAnoLimitado = conversoesPorMesAno.stream().limit(10).collect(Collectors.toList());
+        var conversoesPorMesAno = acompanhamentoLeadRepository.findDiasSemanaComMaisConversoesMes(ano, mes);
+        var conversoesPorMesAnoLimitado = conversoesPorMesAno.stream().limit(10).toList();
 
         var i = 0;
         for (var diasSemanaComMaisConversoesMes : conversoesPorMesAnoLimitado) {
@@ -87,7 +89,7 @@ public class DiasSemanaComMaisConversoesMesService {
 
         File currDir = new File(".");
         String path = currDir.getAbsolutePath();
-        String fileLocation = path.substring(0, path.length() - 1) + "RelatorioDiasSemanaComMaisConversoesMes_" + mes + ".xlsx";
+        String fileLocation = path.substring(0, path.length() - 1) + String.format(NOME_ARQUIVO, ano, mes);
 
         FileOutputStream outputStream = new FileOutputStream(fileLocation);
         workbook.write(outputStream);

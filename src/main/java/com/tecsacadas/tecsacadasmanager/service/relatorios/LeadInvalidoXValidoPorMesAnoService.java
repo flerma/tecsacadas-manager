@@ -19,20 +19,24 @@ import java.io.FileOutputStream;
 
 @Service
 @RequiredArgsConstructor
-public class ConversoesPorAnoMesSemana {
+public class LeadInvalidoXValidoPorMesAnoService {
 
-    public static final String NOME_ARQUIVO = "RelatorioConversoesPorAnoMesSemana.xlsx";
+    public static final String NOME_ARQUIVO = "LeadsValidosXInvalidosPorAnoMes.xlsx";
     public static final String NOME_PLANILHA = "Relatório";
     private final AcompanhamentoLeadRepository acompanhamentoLeadRepository;
 
     @SneakyThrows
-    public void gerar(Integer ano) {
+    public void gerar(Integer ano, Integer mes) {
+
+        var leadsValidos = acompanhamentoLeadRepository.findLeadsValidos(ano, mes);
+        var leadsInvalidos = acompanhamentoLeadRepository.findLeadsInvalidos(ano, mes);
+
         Workbook workbook = new XSSFWorkbook();
 
         Sheet sheet = workbook.createSheet(NOME_PLANILHA);
         sheet.setColumnWidth(0, 2000);
         sheet.setColumnWidth(1, 2000);
-        sheet.setColumnWidth(2, 3000);
+        sheet.setColumnWidth(2, 7000);
         sheet.setColumnWidth(3, 7000);
 
         Row header = sheet.createRow(0);
@@ -57,38 +61,32 @@ public class ConversoesPorAnoMesSemana {
         headerCell.setCellStyle(headerStyle);
 
         headerCell = header.createCell(2);
-        headerCell.setCellValue("Semana");
+        headerCell.setCellValue("Leads Válidos");
         headerCell.setCellStyle(headerStyle);
 
         headerCell = header.createCell(3);
-        headerCell.setCellValue("Total de Conversões");
+        headerCell.setCellValue("Leads Inválidos");
         headerCell.setCellStyle(headerStyle);
 
-        var conversoesPorMesAnoSemana = acompanhamentoLeadRepository.findConversoesPorMesAnoSemana(ano);
+        CellStyle style = workbook.createCellStyle();
+        style.setWrapText(true);
 
-        var i = 0;
-        for (var relatorioConversoesPorAnoMesDto : conversoesPorMesAnoSemana) {
+        Row row = sheet.createRow(1);
+        Cell cell = row.createCell(0);
+        cell.setCellValue(ano);
+        cell.setCellStyle(style);
 
-            CellStyle style = workbook.createCellStyle();
-            style.setWrapText(true);
+        cell = row.createCell(1);
+        cell.setCellValue(mes);
+        cell.setCellStyle(style);
 
-            Row row = sheet.createRow(++i);
-            Cell cell = row.createCell(0);
-            cell.setCellValue(relatorioConversoesPorAnoMesDto.getAno());
-            cell.setCellStyle(style);
+        cell = row.createCell(2);
+        cell.setCellValue(leadsValidos);
+        cell.setCellStyle(style);
 
-            cell = row.createCell(1);
-            cell.setCellValue(relatorioConversoesPorAnoMesDto.getMes());
-            cell.setCellStyle(style);
-
-            cell = row.createCell(2);
-            cell.setCellValue(relatorioConversoesPorAnoMesDto.getSemana().substring(0, 1));
-            cell.setCellStyle(style);
-
-            cell = row.createCell(3);
-            cell.setCellValue(relatorioConversoesPorAnoMesDto.getConversoes());
-            cell.setCellStyle(style);
-        }
+        cell = row.createCell(3);
+        cell.setCellValue(leadsInvalidos);
+        cell.setCellStyle(style);
 
         File currDir = new File(".");
         String path = currDir.getAbsolutePath();

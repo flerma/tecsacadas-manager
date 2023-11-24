@@ -13,9 +13,8 @@ public class UsuarioSistema extends User {
 
     private String nome;
 
-    public UsuarioSistema(String nome, String username, String password, Collection<? extends GrantedAuthority> authorities) {
+    public UsuarioSistema(String nome, String username, String password, Collection<GrantedAuthority> authorities) {
         super(username, password, authorities);
-
         this.nome = nome;
     }
 }

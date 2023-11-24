@@ -21,6 +21,8 @@ import java.io.FileOutputStream;
 @RequiredArgsConstructor
 public class ConversoesPorAnoMesService {
 
+    public static final String NOME_ARQUIVO = "RelatorioConversoesPorAnoEMes.xlsx";
+    public static final String NOME_PLANILHA = "Relatório";
     private final AcompanhamentoLeadRepository acompanhamentoLeadRepository;
 
     @SneakyThrows
@@ -28,7 +30,7 @@ public class ConversoesPorAnoMesService {
 
         Workbook workbook = new XSSFWorkbook();
 
-        Sheet sheet = workbook.createSheet("Conversões por Ano e Mês");
+        Sheet sheet = workbook.createSheet(NOME_PLANILHA);
         sheet.setColumnWidth(0, 2000);
         sheet.setColumnWidth(1, 2000);
         sheet.setColumnWidth(2, 7000);
@@ -82,7 +84,7 @@ public class ConversoesPorAnoMesService {
 
         File currDir = new File(".");
         String path = currDir.getAbsolutePath();
-        String fileLocation = path.substring(0, path.length() - 1) + "RelatorioConversoesPorAnoEMes.xlsx";
+        String fileLocation = path.substring(0, path.length() - 1) + NOME_ARQUIVO;
 
         FileOutputStream outputStream = new FileOutputStream(fileLocation);
         workbook.write(outputStream);
