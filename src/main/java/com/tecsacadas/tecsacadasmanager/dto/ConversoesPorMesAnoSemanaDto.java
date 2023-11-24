@@ -13,6 +13,6 @@ public class ConversoesPorMesAnoSemanaDto {
 
     private Integer ano;
     private Integer mes;
-    private String semana;
+    private Integer semana;
     private Long conversoes;
 }

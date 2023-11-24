@@ -68,16 +68,16 @@ public interface AcompanhamentoLeadRepository extends JpaRepository<Acompanhamen
     @Query(value = "SELECT new com.tecsacadas.tecsacadasmanager.dto.ConversoesPorMesAnoSemanaDto(" +
                    "       extract(year from dataContato)," +
                    "       extract(month from dataContato)," +
-                   "       to_char(dataContato,'week')," +
+                   "       cast(to_char(dataContato, 'W') as integer)," +
                    "       count(id))" +
                    " FROM AcompanhamentoLead" +
                    " WHERE extract(year from dataContato) = :ano" +
                    " GROUP BY extract(year from dataContato)," +
                    "          extract(month from dataContato)," +
-                   "          to_char(dataContato,'week')" +
+                   "          cast(to_char(dataContato, 'W') as integer)" +
                    " ORDER BY extract(year from dataContato)," +
                    "          extract(month from dataContato)," +
-                   "          to_char(dataContato,'week')")
+                   "          cast(to_char(dataContato, 'W') as integer)")
     List<ConversoesPorMesAnoSemanaDto> findConversoesPorMesAnoSemana(@Param("ano") Integer ano);
 
     @Query(value = "SELECT count(id)" +

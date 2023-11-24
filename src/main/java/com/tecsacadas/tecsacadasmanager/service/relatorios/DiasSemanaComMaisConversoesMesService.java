@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,71 +29,30 @@ public class DiasSemanaComMaisConversoesMesService {
     private DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     private final AcompanhamentoLeadRepository acompanhamentoLeadRepository;
+    private final ExcelService excelService;
 
     @SneakyThrows
     public void gerar(Integer ano, Integer mes) {
 
-        Workbook workbook = new XSSFWorkbook();
+        var workbook = excelService.criarWorkbook();
+        var largurasColunas = List.of(3000, 6000, 7000);
+        var sheet = excelService.criarSheet(workbook, NOME_PLANILHA, largurasColunas);
+        var cabecalhos = List.of("Data", "Dia da Semana", "Total de Conversões");
 
-        Sheet sheet = workbook.createSheet(NOME_PLANILHA);
-        sheet.setColumnWidth(0, 3000);
-        sheet.setColumnWidth(1, 6000);
-        sheet.setColumnWidth(2, 7000);
-
-        Row header = sheet.createRow(0);
-
-        CellStyle headerStyle = workbook.createCellStyle();
-        headerStyle.setFillForegroundColor(IndexedColors.DARK_BLUE.getIndex());
-        headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-
-        XSSFFont font = ((XSSFWorkbook) workbook).createFont();
-        font.setFontName("Arial");
-        font.setFontHeightInPoints((short) 14);
-        font.setBold(true);
-        font.setColor(IndexedColors.WHITE.getIndex());
-        headerStyle.setFont(font);
-
-        Cell headerCell = header.createCell(0);
-        headerCell.setCellValue("Data");
-        headerCell.setCellStyle(headerStyle);
-
-        headerCell = header.createCell(1);
-        headerCell.setCellValue("Dia da Semana");
-        headerCell.setCellStyle(headerStyle);
-
-        headerCell = header.createCell(2);
-        headerCell.setCellValue("Total de Conversões");
-        headerCell.setCellStyle(headerStyle);
+        excelService.criarHeaderRow(sheet, workbook, cabecalhos);
 
         var conversoesPorMesAno = acompanhamentoLeadRepository.findDiasSemanaComMaisConversoesMes(ano, mes);
         var conversoesPorMesAnoLimitado = conversoesPorMesAno.stream().limit(10).toList();
-
-        var i = 0;
-        for (var diasSemanaComMaisConversoesMes : conversoesPorMesAnoLimitado) {
-
-            CellStyle style = workbook.createCellStyle();
-            style.setWrapText(true);
-
-            Row row = sheet.createRow(++i);
-            Cell cell = row.createCell(0);
-            cell.setCellValue(diasSemanaComMaisConversoesMes.getData().format(formatoData));
-            cell.setCellStyle(style);
-
-            cell = row.createCell(1);
-            cell.setCellValue(diasSemanaComMaisConversoesMes.getDiaSemana());
-            cell.setCellStyle(style);
-
-            cell = row.createCell(2);
-            cell.setCellValue(diasSemanaComMaisConversoesMes.getConversoes());
-            cell.setCellStyle(style);
+        int i = 1;
+        for (var linha : conversoesPorMesAnoLimitado) {
+            var valores = List.of(
+                    linha.getData().format(formatoData),
+                    linha.getDiaSemana().toString(),
+                    linha.getConversoes().toString()
+            );
+            excelService.adicionarLinha(sheet, i++, valores);
         }
 
-        File currDir = new File(".");
-        String path = currDir.getAbsolutePath();
-        String fileLocation = path.substring(0, path.length() - 1) + String.format(NOME_ARQUIVO, ano, mes);
-
-        FileOutputStream outputStream = new FileOutputStream(fileLocation);
-        workbook.write(outputStream);
-        workbook.close();
+        excelService.salvarArquivo(workbook, String.format(NOME_ARQUIVO, ano, mes));
     }
 }
