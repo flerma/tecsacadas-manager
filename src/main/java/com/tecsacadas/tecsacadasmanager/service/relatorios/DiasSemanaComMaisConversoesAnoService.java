@@ -21,29 +21,27 @@ public class DiasSemanaComMaisConversoesAnoService {
     private final ExcelService excelService;
 
     @SneakyThrows
-    public Mono<Void> gerar(Integer ano) {
+    public void gerar(Integer ano) {
 
-        return Mono.fromRunnable(() -> {
-            var workbook = excelService.criarWorkbook();
-            var largurasColunas = List.of(3000, 6000, 7000);
-            var sheet = excelService.criarSheet(workbook, NOME_PLANILHA, largurasColunas);
-            var cabecalhos = List.of("Data", "Dia da Semana", "Total de Conversões");
+        var workbook = excelService.criarWorkbook();
+        var largurasColunas = List.of(3000, 6000, 7000);
+        var sheet = excelService.criarSheet(workbook, NOME_PLANILHA, largurasColunas);
+        var cabecalhos = List.of("Data", "Dia da Semana", "Total de Conversões");
 
-            excelService.criarHeaderRow(sheet, workbook, cabecalhos);
+        excelService.criarHeaderRow(sheet, workbook, cabecalhos);
 
-            var conversoesPorAno = acompanhamentoLeadRepository.findDiasSemanaComMaisConversoesAno(ano);
-            var conversoesPorAnoLimitado = conversoesPorAno.stream().limit(20).toList();
-            int i = 1;
-            for (var linha : conversoesPorAnoLimitado) {
-                var valores = List.of(
-                        linha.getData().format(formatoData),
-                        linha.getDiaSemana().toString(),
-                        linha.getConversoes().toString()
-                );
-                excelService.adicionarLinha(sheet, i++, valores);
-            }
+        var conversoesPorAno = acompanhamentoLeadRepository.findDiasSemanaComMaisConversoesAno(ano);
+        var conversoesPorAnoLimitado = conversoesPorAno.stream().limit(20).toList();
+        int i = 1;
+        for (var linha : conversoesPorAnoLimitado) {
+            var valores = List.of(
+                    linha.getData().format(formatoData),
+                    linha.getDiaSemana().toString(),
+                    linha.getConversoes().toString()
+            );
+            excelService.adicionarLinha(sheet, i++, valores);
+        }
 
-            excelService.salvarArquivo(workbook, String.format(NOME_ARQUIVO, ano));
-        });
+        excelService.salvarArquivo(workbook, String.format(NOME_ARQUIVO, ano));
     }
 }

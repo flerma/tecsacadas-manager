@@ -11,7 +11,6 @@ import com.tecsacadas.tecsacadasmanager.service.relatorios.LeadInvalidoXValidoPo
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -39,12 +38,11 @@ public class AcompanhamentoDeLeadService {
     }
 
     public void gerarTodosRelatorios(Integer ano, Integer mes) {
-        Mono.when(conversoesPorAnoMesService.gerar(ano),
-                  conversoesPorAnoMesSemanaService.gerar(ano),
-                  diasSemanaComMaisConversoesAnoService.gerar(ano),
-                  leadInvalidoXValidoPorMesAnoService.gerar(ano, mes),
-                  diasSemanaComMaisConversoesMesService.gerar(ano, mes))
-                .subscribe();
+        conversoesPorAnoMesSemanaService.gerar(ano);
+        conversoesPorAnoMesService.gerar(ano);
+        diasSemanaComMaisConversoesAnoService.gerar(ano);
+        leadInvalidoXValidoPorMesAnoService.gerar(ano, mes);
+        diasSemanaComMaisConversoesMesService.gerar(ano, mes);
     }
 
     public void gerarDiasSemanaComMaisConversoesAno(Integer ano) {

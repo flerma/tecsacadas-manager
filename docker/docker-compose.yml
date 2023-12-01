@@ -1,17 +1,17 @@
 version: '3'
 
 services:
-  postgres:
-    image: postgres:latest
-    restart: always
+  mysql:
+    image: mysql
     ports:
-      - 5433:5432
+      - "3306:3306"
     environment:
-      POSTGRES_DB: tecsacadas
-      POSTGRES_USER: tecsacadas
-      POSTGRES_PASSWORD: tecsacadas@123
+      MYSQL_ROOT_PASSWORD: tecsacadas@123
+      MYSQL_USER: tecsacadas
+      MYSQL_PASSWORD: tecsacadas
+      MYSQL_DATABASE: tecsacadas
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - dbdata:/var/lib/mysql
 
 volumes:
-  pgdata:
+  dbdata:

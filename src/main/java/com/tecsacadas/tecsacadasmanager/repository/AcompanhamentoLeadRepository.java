@@ -14,27 +14,27 @@ public interface AcompanhamentoLeadRepository extends JpaRepository<Acompanhamen
 
 
     @Query(value = "SELECT new com.tecsacadas.tecsacadasmanager.dto.ConversoesPorAnoMesDto(" +
-                   "               extract(year from dataContato), " +
-                   "               extract(month from dataContato), " +
+                   "               year(dataContato), " +
+                   "               month(dataContato), " +
                    "               count(id)) " +
                    " FROM AcompanhamentoLead" +
-                   " WHERE extract(year from dataContato) = :ano" +
-                   " GROUP by extract(year from dataContato)," +
-                   "          extract(month from dataContato)" +
-                   " ORDER BY extract(year from dataContato)," +
-                   "          extract(month from dataContato)")
+                   " WHERE year(dataContato) = :ano" +
+                   " GROUP by year(dataContato)," +
+                   "          month(dataContato)" +
+                   " ORDER BY year(dataContato)," +
+                   "          month(dataContato)")
     List<ConversoesPorAnoMesDto> findConversoesPorMesAno(@Param("ano") Integer ano);
 
     @Query(value = "SELECT new com.tecsacadas.tecsacadasmanager.dto.DiasSemanaComMaisConversoesMesDto(" +
                    "  dataContato, " +
-                   "  CASE " +
-                   "         WHEN extract(dow from dataContato) = 0 THEN 'Domingo'" +
-                   "         WHEN extract(dow from dataContato) = 1 THEN 'Segunda-feira'" +
-                   "         WHEN extract(dow from dataContato) = 2 THEN 'Terça-feira'" +
-                   "         WHEN extract(dow from dataContato) = 3 THEN 'Quarta-feira'" +
-                   "         WHEN extract(dow from dataContato) = 4 THEN 'Quinta-feira'" +
-                   "         WHEN extract(dow from dataContato) = 5 THEN 'Sexta-feira'" +
-                   "         WHEN extract(dow from dataContato) = 6 THEN 'Sabado'" +
+                   "  CASE weekday(dataContato)" +
+                   "         WHEN 6 THEN 'Domingo'" +
+                   "         WHEN 0 THEN 'Segunda-feira'" +
+                   "         WHEN 1 THEN 'Terça-feira'" +
+                   "         WHEN 2 THEN 'Quarta-feira'" +
+                   "         WHEN 3 THEN 'Quinta-feira'" +
+                   "         WHEN 4 THEN 'Sexta-feira'" +
+                   "         WHEN 5 THEN 'Sabado'" +
                    "         ELSE 'other'" +
                    "  END," +
                    "  COUNT(id))" +
@@ -48,14 +48,14 @@ public interface AcompanhamentoLeadRepository extends JpaRepository<Acompanhamen
 
     @Query(value = "SELECT new com.tecsacadas.tecsacadasmanager.dto.DiasSemanaComMaisConversoesMesDto(" +
             "  dataContato, " +
-            "  CASE " +
-            "         WHEN extract(dow from dataContato) = 0 THEN 'Domingo'" +
-            "         WHEN extract(dow from dataContato) = 1 THEN 'Segunda-feira'" +
-            "         WHEN extract(dow from dataContato) = 2 THEN 'Terça-feira'" +
-            "         WHEN extract(dow from dataContato) = 3 THEN 'Quarta-feira'" +
-            "         WHEN extract(dow from dataContato) = 4 THEN 'Quinta-feira'" +
-            "         WHEN extract(dow from dataContato) = 5 THEN 'Sexta-feira'" +
-            "         WHEN extract(dow from dataContato) = 6 THEN 'Sabado'" +
+            "  CASE weekday(dataContato)" +
+            "         WHEN 6 THEN 'Domingo'" +
+            "         WHEN 0 THEN 'Segunda-feira'" +
+            "         WHEN 1 THEN 'Terça-feira'" +
+            "         WHEN 2 THEN 'Quarta-feira'" +
+            "         WHEN 3 THEN 'Quinta-feira'" +
+            "         WHEN 4 THEN 'Sexta-feira'" +
+            "         WHEN 5 THEN 'Sabado'" +
             "         ELSE 'other'" +
             "  END," +
             "  COUNT(id))" +
@@ -67,39 +67,39 @@ public interface AcompanhamentoLeadRepository extends JpaRepository<Acompanhamen
 
 
     @Query(value = "SELECT new com.tecsacadas.tecsacadasmanager.dto.ConversoesPorMesAnoSemanaDto(" +
-                   "       extract(year from dataContato)," +
-                   "       extract(month from dataContato)," +
-                   "       cast(to_char(dataContato, 'W') as integer)," +
+                   "       year(dataContato)," +
+                   "       month(dataContato)," +
+                   "       floor((DayOfMonth(dataContato)-1)/7)+1," +
                    "       count(id))" +
                    " FROM AcompanhamentoLead" +
-                   " WHERE extract(year from dataContato) = :ano" +
-                   " GROUP BY extract(year from dataContato)," +
-                   "          extract(month from dataContato)," +
-                   "          cast(to_char(dataContato, 'W') as integer)" +
-                   " ORDER BY extract(year from dataContato)," +
-                   "          extract(month from dataContato)," +
-                   "          cast(to_char(dataContato, 'W') as integer)")
+                   " WHERE year(dataContato) = :ano" +
+                   " GROUP BY year(dataContato)," +
+                   "          month(dataContato)," +
+                   "          floor((DayOfMonth(dataContato)-1)/7)+1" +
+                   " ORDER BY year(dataContato)," +
+                   "          month(dataContato)," +
+                   "          floor((DayOfMonth(dataContato)-1)/7)+1")
     List<ConversoesPorMesAnoSemanaDto> findConversoesPorMesAnoSemana(@Param("ano") Integer ano);
 
     @Query(value = "SELECT count(id)" +
                    " FROM AcompanhamentoLead " +
-                   " WHERE extract(month from dataContato) = :mes" +
-                   "   AND extract(year from dataContato) = :ano" +
+                   " WHERE month(dataContato) = :mes" +
+                   "   AND year(dataContato) = :ano" +
                    "   AND coalesce(motivoNaoSerPotencial, '') = ''" +
-                   " GROUP BY extract(year from dataContato)," +
-                   "          extract(year from dataContato)" +
-                   " ORDER BY extract(year from dataContato)," +
-                   "          extract(year from dataContato)")
+                   " GROUP BY year(dataContato)," +
+                   "          month(dataContato)" +
+                   " ORDER BY year(dataContato)," +
+                   "          month(dataContato)")
     Long findLeadsValidos(@Param("ano") Integer ano, @Param("mes") Integer mes);
 
     @Query(value = "SELECT count(id)" +
             " FROM AcompanhamentoLead " +
-            " WHERE extract(month from dataContato) = :mes" +
-            "   AND extract(year from dataContato) = :ano" +
+            " WHERE month(dataContato) = :mes" +
+            "   AND year(dataContato) = :ano" +
             "   AND coalesce(motivoNaoSerPotencial, '') <> ''" +
-            " GROUP BY extract(year from dataContato)," +
-            "          extract(month from dataContato)" +
-            " ORDER BY extract(year from dataContato)," +
-            "          extract(month from dataContato)")
+            " GROUP BY year(dataContato)," +
+            "          month(dataContato)" +
+            " ORDER BY year(dataContato)," +
+            "          month(dataContato)")
     Long findLeadsInvalidos(@Param("ano") Integer ano, @Param("mes") Integer mes);
 }

@@ -4,7 +4,6 @@ import com.tecsacadas.tecsacadasmanager.repository.AcompanhamentoLeadRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -19,29 +18,27 @@ public class ConversoesPorAnoMesSemana {
     private final ExcelService excelService;
 
     @SneakyThrows
-    public Mono<Void> gerar(Integer ano) {
+    public void gerar(Integer ano) {
 
-        return Mono.fromRunnable(() -> {
-            var workbook = excelService.criarWorkbook();
-            var largurasColunas = List.of(2000, 2000, 3000, 7000);
-            var sheet = excelService.criarSheet(workbook, NOME_PLANILHA, largurasColunas);
-            var cabecalhos = List.of("Ano", "Mês", "Semana", "Total de Conversões");
+        var workbook = excelService.criarWorkbook();
+        var largurasColunas = List.of(2000, 2000, 3000, 7000);
+        var sheet = excelService.criarSheet(workbook, NOME_PLANILHA, largurasColunas);
+        var cabecalhos = List.of("Ano", "Mês", "Semana", "Total de Conversões");
 
-            excelService.criarHeaderRow(sheet, workbook, cabecalhos);
+        excelService.criarHeaderRow(sheet, workbook, cabecalhos);
 
-            var conversoesPorMesAnoSemana = acompanhamentoLeadRepository.findConversoesPorMesAnoSemana(ano);
-            int i = 1;
-            for (var linha : conversoesPorMesAnoSemana) {
-                var valores = List.of(
-                        linha.getAno().toString(),
-                        linha.getMes().toString(),
-                        linha.getSemana().toString(),
-                        linha.getConversoes().toString()
-                );
-                excelService.adicionarLinha(sheet, i++, valores);
-            }
+        var conversoesPorMesAnoSemana = acompanhamentoLeadRepository.findConversoesPorMesAnoSemana(ano);
+        int i = 1;
+        for (var linha : conversoesPorMesAnoSemana) {
+            var valores = List.of(
+                    linha.getAno().toString(),
+                    linha.getMes().toString(),
+                    linha.getSemana().toString(),
+                    linha.getConversoes().toString()
+            );
+            excelService.adicionarLinha(sheet, i++, valores);
+        }
 
-            excelService.salvarArquivo(workbook, String.format(NOME_ARQUIVO, ano));
-        });
+        excelService.salvarArquivo(workbook, String.format(NOME_ARQUIVO, ano));
     }
 }

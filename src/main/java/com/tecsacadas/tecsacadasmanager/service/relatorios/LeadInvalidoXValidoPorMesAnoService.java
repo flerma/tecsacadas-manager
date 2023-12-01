@@ -4,7 +4,6 @@ import com.tecsacadas.tecsacadasmanager.repository.AcompanhamentoLeadRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -18,28 +17,26 @@ public class LeadInvalidoXValidoPorMesAnoService {
     private final ExcelService excelService;
 
     @SneakyThrows
-    public Mono<Void> gerar(Integer ano, Integer mes) {
+    public void gerar(Integer ano, Integer mes) {
 
-        return Mono.fromRunnable(() -> {
-            var workbook = excelService.criarWorkbook();
-            var largurasColunas = List.of(2000, 2000, 7000, 7000);
-            var sheet = excelService.criarSheet(workbook, NOME_PLANILHA, largurasColunas);
-            var cabecalhos = List.of("Ano", "Mês", "Leads Válidos", "Leads Inválidos");
+        var workbook = excelService.criarWorkbook();
+        var largurasColunas = List.of(2000, 2000, 7000, 7000);
+        var sheet = excelService.criarSheet(workbook, NOME_PLANILHA, largurasColunas);
+        var cabecalhos = List.of("Ano", "Mês", "Leads Válidos", "Leads Inválidos");
 
-            excelService.criarHeaderRow(sheet, workbook, cabecalhos);
+        excelService.criarHeaderRow(sheet, workbook, cabecalhos);
 
-            var leadsValidos = acompanhamentoLeadRepository.findLeadsValidos(ano, mes);
-            var leadsInvalidos = acompanhamentoLeadRepository.findLeadsInvalidos(ano, mes);
+        var leadsValidos = acompanhamentoLeadRepository.findLeadsValidos(ano, mes);
+        var leadsInvalidos = acompanhamentoLeadRepository.findLeadsInvalidos(ano, mes);
 
-            var valores = List.of(
-                    ano.toString(),
-                    mes.toString(),
-                    leadsValidos.toString(),
-                    leadsInvalidos.toString()
-            );
-            excelService.adicionarLinha(sheet, 1, valores);
+        var valores = List.of(
+                ano.toString(),
+                mes.toString(),
+                leadsValidos.toString(),
+                leadsInvalidos.toString()
+        );
+        excelService.adicionarLinha(sheet, 1, valores);
 
-            excelService.salvarArquivo(workbook, String.format(NOME_ARQUIVO, ano, mes));
-        });
+        excelService.salvarArquivo(workbook, String.format(NOME_ARQUIVO, ano, mes));
     }
 }

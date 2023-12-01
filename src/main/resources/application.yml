@@ -1,19 +1,19 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5433/tecsacadas
+    url: jdbc:mysql://localhost:3306/tecsacadas
     username: tecsacadas
-    password: tecsacadas@123
-    driver-class-name: org.postgresql.Driver
+    password: tecsacadas
+    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
       ddl-auto: update
     show-sql: true
   flyway:
     enabled: true
-    url: jdbc:postgresql://localhost:5433/tecsacadas
+    url: jdbc:mysql://localhost:3306/tecsacadas
     user: tecsacadas
-    password: tecsacadas@123
+    password: tecsacadas
 
 server:
   port: 8081

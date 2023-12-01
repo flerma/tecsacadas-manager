@@ -1,5 +1,5 @@
-CREATE TABLE public.acompanhamento_lead (
-    id 			 			 SERIAL NOT NULL,
+CREATE TABLE acompanhamento_lead (
+    id 			 			 BIGINT AUTO_INCREMENT NOT NULL,
     data_contato 			 DATE NOT NULL,
     local_origem 			 VARCHAR(255) NOT NULL,
     procurou     			 VARCHAR(255) NOT NULL,
