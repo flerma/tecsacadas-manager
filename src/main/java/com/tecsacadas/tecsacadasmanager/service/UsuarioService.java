@@ -30,6 +30,11 @@ public class UsuarioService {
                 .map(Usuario::toDto);
     }
 
+    public Optional<UsuarioDto> buscarPorLogin(String login) {
+        return usuarioRepository.findByLogin(login)
+                .map(Usuario::toDto);
+    }
+
     public UsuarioDto criar(UsuarioDto usuario) {
         Optional<Usuario> usuarioExistente = usuarioRepository.findByLogin(usuario.getLogin());
         if (usuarioExistente.isPresent()) {
