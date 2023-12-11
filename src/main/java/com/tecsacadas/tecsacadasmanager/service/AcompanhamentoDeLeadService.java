@@ -11,8 +11,13 @@ import com.tecsacadas.tecsacadasmanager.service.relatorios.LeadInvalidoXValidoPo
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -32,17 +37,30 @@ public class AcompanhamentoDeLeadService {
         salvar(acompanhamentoLeadList);
     }
 
+    @SneakyThrows
+    public void upload(MultipartFile file) {
+        InputStream inputStream = file.getInputStream();
+        var acompanhamentoLeadList =  importacaoArquivoLeadsService.lerArquivo(inputStream);
+        salvar(acompanhamentoLeadList);
+        inputStream.close();
+    }
+
     private void salvar(List<AcompanhamentoLead> acompanhamentoLeadList) {
         acompanhamentoLeadRepository.deleteAll();
         acompanhamentoLeadRepository.saveAll(acompanhamentoLeadList);
     }
 
     public void gerarTodosRelatorios(Integer ano, Integer mes) {
-        conversoesPorAnoMesSemanaService.gerar(ano);
-        conversoesPorAnoMesService.gerar(ano);
-        diasSemanaComMaisConversoesAnoService.gerar(ano);
-        leadInvalidoXValidoPorMesAnoService.gerar(ano, mes);
-        diasSemanaComMaisConversoesMesService.gerar(ano, mes);
+
+        CompletableFuture<?>[] tarefas = Stream.of(
+                CompletableFuture.runAsync(() -> conversoesPorAnoMesSemanaService.gerar(ano)),
+                CompletableFuture.runAsync(() -> conversoesPorAnoMesService.gerar(ano)),
+                CompletableFuture.runAsync(() -> diasSemanaComMaisConversoesAnoService.gerar(ano)),
+                CompletableFuture.runAsync(() -> leadInvalidoXValidoPorMesAnoService.gerar(ano, mes)),
+                CompletableFuture.runAsync(() -> diasSemanaComMaisConversoesMesService.gerar(ano, mes))
+        ).toArray(CompletableFuture[]::new);
+
+        CompletableFuture.allOf(tarefas).join();
     }
 
     public void gerarDiasSemanaComMaisConversoesAno(Integer ano) {

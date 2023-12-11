@@ -3,11 +3,14 @@ package com.tecsacadas.tecsacadasmanager.service.relatorios;
 import com.tecsacadas.tecsacadasmanager.repository.AcompanhamentoLeadRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class DiasSemanaComMaisConversoesMesService {
@@ -42,5 +45,7 @@ public class DiasSemanaComMaisConversoesMesService {
         }
 
         excelService.salvarArquivo(workbook, String.format(NOME_ARQUIVO, ano, mes));
+
+        log.info(NOME_ARQUIVO + " gerado com sucesso!", ano, mes);
     }
 }

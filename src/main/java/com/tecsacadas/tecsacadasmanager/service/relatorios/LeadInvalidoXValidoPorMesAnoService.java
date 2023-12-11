@@ -3,10 +3,12 @@ package com.tecsacadas.tecsacadasmanager.service.relatorios;
 import com.tecsacadas.tecsacadasmanager.repository.AcompanhamentoLeadRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class LeadInvalidoXValidoPorMesAnoService {
@@ -38,5 +40,7 @@ public class LeadInvalidoXValidoPorMesAnoService {
         excelService.adicionarLinha(sheet, 1, valores);
 
         excelService.salvarArquivo(workbook, String.format(NOME_ARQUIVO, ano, mes));
+
+        log.info(NOME_ARQUIVO + " gerado com sucesso!", ano, mes);
     }
 }

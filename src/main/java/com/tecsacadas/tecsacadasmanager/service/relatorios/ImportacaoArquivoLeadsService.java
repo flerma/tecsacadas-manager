@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,12 +35,20 @@ public class ImportacaoArquivoLeadsService {
     private final FileService fileService;
 
     public List<AcompanhamentoLead> lerArquivo() throws IOException {
+        var fileInputStream = fileService.getArquivo(path);
+        var workbook = new XSSFWorkbook(fileInputStream);
+        return lerArquivo(workbook);
+    }
+
+    public List<AcompanhamentoLead> lerArquivo(InputStream inputStream) throws IOException {
+        var workbook = new XSSFWorkbook(inputStream);
+        return lerArquivo(workbook);
+    }
+
+    public List<AcompanhamentoLead> lerArquivo(XSSFWorkbook workbook) throws IOException {
 
         acompanhamentoLeadRepository.deleteAll();
 
-        var fileInputStream = fileService.getArquivo(path);
-
-        var workbook = new XSSFWorkbook(fileInputStream);
         var sheet = workbook.getSheetAt(PRIMEIRA_PLANILHA);
         var acompanhamentoLeadList = new ArrayList<AcompanhamentoLead>();
         var i = LINHA_ZERO;
@@ -66,6 +75,9 @@ public class ImportacaoArquivoLeadsService {
             acompanhamentoLeadList.add(acompanhamentoLead);
             i++;
         }
+        sheet.getWorkbook().close();
+        workbook.close();
+
         return acompanhamentoLeadList;
     }
 
