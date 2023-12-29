@@ -144,7 +144,16 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                    <mainClass>com.tecsacadas.tecsacadasmanager.TecsacadasManagerApplication</mainClass>
+                    <layout>JAR</layout>
                 </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

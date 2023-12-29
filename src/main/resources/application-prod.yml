@@ -20,3 +20,6 @@ server:
 
 acompanhamento-leads:
     path: classpath:sheets/acompanhamento-leads/AcompanhamentoDeLeadsTecSacadas.xlsx
+
+cep-api:
+  url: https://viacep.com.br/ws
