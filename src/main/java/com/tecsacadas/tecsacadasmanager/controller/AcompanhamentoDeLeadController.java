@@ -64,36 +64,87 @@ public class AcompanhamentoDeLeadController {
         return ResponseEntity.ok().build();
     }
 
+    @Operation(summary = "Gera todos os relatórios de leads por ano e mes.",
+            description = "Chamada criada para gerar todos os relatórios de leads de uma só vez.")
+    @Parameter(name = "ano",
+            description = "Ano em que o lead foi gerardo.",
+            required = true)
+    @Parameter(name = "mes",
+            description = "Mês em que o lead foi gerardo.",
+            required = true)
+    @ApiResponse(responseCode = "200",
+            description = "Sucesso")
     @GetMapping("/todos-relatorios/{ano}/{mes}")
     public ResponseEntity<Void> gerarTodosRelatorios(@PathVariable Integer ano, @PathVariable Integer mes) {
         acompanhamentoLeadsService.gerarTodosRelatorios(ano, mes);
         return ResponseEntity.ok().build();
     }
 
+    @Operation(summary = "Gera reletório de conversões por ano e mes.",
+            description = "Chamada criada para gera od relatório de conversões por ano e mes.")
+    @Parameter(name = "ano",
+            description = "Ano em que o lead foi gerardo.",
+            required = true)
+    @ApiResponse(responseCode = "200",
+            description = "Sucesso")
     @GetMapping("/conversoes-por-ano-mes/{ano}")
     public ResponseEntity<Void> gerarConversoesPorAnoMes(@PathVariable Integer ano) {
         acompanhamentoLeadsService.gerarConversoesPorAnoMes(ano);
         return ResponseEntity.ok().build();
     }
 
+    @Operation(summary = "Gera relatório de dias da semana com mais conversões por mes.",
+            description = "Chamada criada para gerar relatório que informa os dias da semana no mês com mais conversões.")
+    @Parameter(name = "ano",
+            description = "Ano em que o lead foi gerardo.",
+            required = true)
+    @Parameter(name = "mes",
+            description = "Mês em que o lead foi gerardo.",
+            required = true)
+    @ApiResponse(responseCode = "200",
+            description = "Sucesso")
     @GetMapping("/dias-semana-mais-conversoes-mes/{ano}/{mes}")
     public ResponseEntity<Void> gerarDiasSemanaComMaisConversoesMes(@PathVariable Integer ano, @PathVariable Integer mes) {
         acompanhamentoLeadsService.gerarDiasSemanaComMaisConversoesMes(ano, mes);
         return ResponseEntity.ok().build();
     }
 
+    @Operation(summary = "Gera relatório de dias da semana com mais conversões no ano.",
+            description = "Chamada criada para gerar relatório que informa os dias da semana no ano com mais conversões.")
+    @Parameter(name = "ano",
+            description = "Ano em que o lead foi gerardo.",
+            required = true)
+    @ApiResponse(responseCode = "200",
+            description = "Sucesso")
     @GetMapping("/dias-semana-mais-conversoes-ano/{ano}")
     public ResponseEntity<Void> gerarDiasSemanaComMaisConversoesAno(@PathVariable Integer ano) {
         acompanhamentoLeadsService.gerarDiasSemanaComMaisConversoesAno(ano);
         return ResponseEntity.ok().build();
     }
 
+    @Operation(summary = "Gera relatório das conversões por ano, mês e semana.",
+            description = "Chamada criada para gerar relatório que informa as conversões por ano, mês e semana.")
+    @Parameter(name = "ano",
+            description = "Ano em que o lead foi gerardo.",
+            required = true)
+    @ApiResponse(responseCode = "200",
+            description = "Sucesso")
     @GetMapping("/conversoes-por-ano-mes-semana/{ano}")
     public ResponseEntity<Void> gerarConversoesPorAnoMesSemana(@PathVariable Integer ano) {
         acompanhamentoLeadsService.gerarConversoesPorAnoMesSemana(ano);
         return ResponseEntity.ok().build();
     }
 
+    @Operation(summary = "Gera relatório os leads inválidos contra válidos por ano e mês.",
+            description = "Chamada criada para gerar relatório os leads inválidos contra válidos por ano e mês.")
+    @Parameter(name = "ano",
+            description = "Ano em que o lead foi gerardo.",
+            required = true)
+    @Parameter(name = "mes",
+            description = "Mês em que o lead foi gerardo.",
+            required = true)
+    @ApiResponse(responseCode = "200",
+            description = "Sucesso")
     @GetMapping("/leads-invalidos-e-validos-por-ano-mes/{ano}/{mes}")
     public ResponseEntity<Void> gerarLeadsValidosXInvalidosPorAnoMes(@PathVariable Integer ano, @PathVariable Integer mes) {
         acompanhamentoLeadsService.gerarLeadsValidosXInvalidosPorAnoMes(ano, mes);

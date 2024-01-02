@@ -1,12 +1,12 @@
 package com.tecsacadas.tecsacadasmanager.validator;
 
 import com.tecsacadas.tecsacadasmanager.exception.FileNotSupportedException;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 @Component
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class UploadValidator {
 
     public static void validate(MultipartFile file) {
