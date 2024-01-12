@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  mysql:
+  tecsacadas-mysql:
     image: mysql
     ports:
       - "3306:3306"
@@ -11,7 +11,7 @@ services:
       MYSQL_PASSWORD: tecsacadas
       MYSQL_DATABASE: tecsacadas
     volumes:
-      - dbdata:/var/lib/mysql
+      - tecsacadas_database:/var/lib/mysql
 
 volumes:
-  dbdata:
+  tecsacadas_database:

@@ -14,6 +14,7 @@ spring:
     url: jdbc:mysql://localhost:3306/tecsacadas
     user: tecsacadas
     password: tecsacadas
+    encoding: iso-8859-16
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
@@ -27,7 +28,8 @@ acompanhamento-leads:
 cep-api:
     url: https://viacep.com.br/ws
 
-#############################################################################
-## OpenApi
-#############################################################################
+###############
+##  OpenApi  ##
+###############
 springdoc.default-produces-media-type: application/json
+
