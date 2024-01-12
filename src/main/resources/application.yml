@@ -18,6 +18,9 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+  sql:
+    init:
+      encoding: ISO-8859-16
 
 server:
   port: 8081

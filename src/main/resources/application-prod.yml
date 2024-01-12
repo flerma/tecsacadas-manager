@@ -13,8 +13,11 @@ spring:
     enabled: true
     url: jdbc:postgresql://localhost:5433/tecsacadas
     user: tecsacadas
-    password: tecsacadas@123
-
+    password: tecsacadas
+    encoding: iso-8859-16
+  sql:
+    init:
+      encoding: ISO-8859-16
 server:
   port: 3803
 
