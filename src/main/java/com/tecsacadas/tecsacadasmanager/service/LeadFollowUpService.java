@@ -2,12 +2,12 @@ package com.tecsacadas.tecsacadasmanager.service;
 
 import com.tecsacadas.tecsacadasmanager.domain.model.LeadFollowUp;
 import com.tecsacadas.tecsacadasmanager.repository.LeadFollowUpRepository;
-import com.tecsacadas.tecsacadasmanager.service.relatorios.ConversoesPorAnoMesSemana;
-import com.tecsacadas.tecsacadasmanager.service.relatorios.ConversoesPorAnoMesService;
-import com.tecsacadas.tecsacadasmanager.service.relatorios.DiasSemanaComMaisConversoesAnoService;
-import com.tecsacadas.tecsacadasmanager.service.relatorios.DiasSemanaComMaisConversoesMesService;
-import com.tecsacadas.tecsacadasmanager.service.relatorios.LeadFileImportService;
-import com.tecsacadas.tecsacadasmanager.service.relatorios.LeadInvalidoXValidoPorMesAnoService;
+import com.tecsacadas.tecsacadasmanager.service.reports.ConversoesPorAnoMesSemana;
+import com.tecsacadas.tecsacadasmanager.service.reports.ConversoesPorAnoMesService;
+import com.tecsacadas.tecsacadasmanager.service.reports.DiasSemanaComMaisConversoesAnoService;
+import com.tecsacadas.tecsacadasmanager.service.reports.DiasSemanaComMaisConversoesMesService;
+import com.tecsacadas.tecsacadasmanager.service.reports.LeadFileImportService;
+import com.tecsacadas.tecsacadasmanager.service.reports.LeadInvalidoXValidoPorMesAnoService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;

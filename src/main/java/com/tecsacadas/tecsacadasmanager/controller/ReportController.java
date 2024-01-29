@@ -1,7 +1,7 @@
 package com.tecsacadas.tecsacadasmanager.controller;
 
 import com.tecsacadas.tecsacadasmanager.dto.ReportDto;
-import com.tecsacadas.tecsacadasmanager.service.relatorios.ReportService;
+import com.tecsacadas.tecsacadasmanager.service.reports.ReportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;

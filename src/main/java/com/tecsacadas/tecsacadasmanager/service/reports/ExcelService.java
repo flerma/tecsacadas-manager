@@ -1,4 +1,4 @@
-package com.tecsacadas.tecsacadasmanager.service.relatorios;
+package com.tecsacadas.tecsacadasmanager.service.reports;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;

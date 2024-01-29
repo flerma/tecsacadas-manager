@@ -1,4 +1,4 @@
-package com.tecsacadas.tecsacadasmanager.service.relatorios;
+package com.tecsacadas.tecsacadasmanager.service.reports;
 
 import com.tecsacadas.tecsacadasmanager.repository.LeadFollowUpRepository;
 import lombok.RequiredArgsConstructor;
