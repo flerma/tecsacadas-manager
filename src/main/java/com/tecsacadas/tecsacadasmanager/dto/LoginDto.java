@@ -17,5 +17,5 @@ public class LoginDto {
 
     private String login;
 
-    private String senha;
+    private String password;
 }

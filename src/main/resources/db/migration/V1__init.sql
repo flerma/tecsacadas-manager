@@ -1,143 +1,144 @@
-CREATE TABLE cliente (
+CREATE TABLE customer (
      id BIGINT AUTO_INCREMENT PRIMARY KEY,
-     nome VARCHAR(255) NOT NULL,
+     name VARCHAR(255) NOT NULL,
      cpf BIGINT NOT NULL,
      rg VARCHAR(20),
      email VARCHAR(255) NOT NULL,
-     telefone BIGINT,
-     endereco VARCHAR(255) NOT NULL,
-     numero VARCHAR(10) NOT NULL,
-     bairro VARCHAR(255) NOT NULL,
-     cidade VARCHAR(255) NOT NULL,
-     estado VARCHAR(2),
+     phone BIGINT,
+     address VARCHAR(255) NOT NULL,
+     number VARCHAR(10) NOT NULL,
+     neighborhood VARCHAR(255) NOT NULL,
+     city VARCHAR(255) NOT NULL,
+     state VARCHAR(2),
      cep BIGINT NOT NULL
 );
 
-CREATE TABLE ambiente (
+CREATE TABLE room (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(255) NOT NULL
+    name VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE material (
-  id BIGINT AUTO_INCREMENT PRIMARY KEY,
-  nome VARCHAR(255) NOT NULL,
-  valor NUMERIC(10,2) NOT NULL
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    price NUMERIC(10,2) NOT NULL
 );
 
-CREATE TABLE servico (
+CREATE TABLE service (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(255) NOT NULL,
-    valor NUMERIC(10,2) NOT NULL
+    name VARCHAR(255) NOT NULL,
+    price NUMERIC(10,2) NOT NULL
 );
 
-CREATE TABLE orcamento (
+CREATE TABLE budget (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    cliente_id BIGINT NOT NULL,
-    sistema VARCHAR(255)  NOT NULL,
-    quantidade_folhas VARCHAR(255)  NOT NULL,
-    valor_total NUMERIC(10,2)  NOT NULL,
-    observacao TEXT
+    customer_id BIGINT NOT NULL,
+    `system` VARCHAR(255)  NOT NULL,
+    quantity_glass_sheets VARCHAR(255)  NOT NULL,
+    total_price NUMERIC(10,2)  NOT NULL,
+    note TEXT
 );
 
-CREATE TABLE orcamento_materiais (
+CREATE TABLE budget_materials (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    orcamento_id BIGINT NOT NULL,
-    quantidade INTEGER NOT NULL,
+    budget_id BIGINT NOT NULL,
+    quantity INTEGER NOT NULL,
     material_id BIGINT NOT NULL,
-    valor NUMERIC(10,2) NOT NULL,
-    observacao TEXT
+    price NUMERIC(10,2) NOT NULL,
+    note TEXT
 );
 
-CREATE TABLE orcamento_servicos (
+CREATE TABLE budget_services (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    orcamento_id BIGINT NOT NULL,
-    quantidade INTEGER NOT NULL,
-    servico_id BIGINT NOT NULL,
-    valor NUMERIC(10,2) NOT NULL,
-    observacao TEXT
+    budget_id BIGINT NOT NULL,
+    quantity INTEGER NOT NULL,
+    service_id BIGINT NOT NULL,
+    price NUMERIC(10,2) NOT NULL,
+    note TEXT
 );
 
-CREATE TABLE orderm_servico (
+CREATE TABLE work_order (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    cliente_id BIGINT NOT NULL,
-    sistema VARCHAR(255) NOT NULL,
-    quantidade_folhas VARCHAR(255) NOT NULL,
-    valor_total NUMERIC(10,2) NOT NULL,
-    observacao TEXT
+    customer_id BIGINT NOT NULL,
+    `system` VARCHAR(255) NOT NULL,
+    quantity_glass_sheets VARCHAR(255) NOT NULL,
+    total_price NUMERIC(10,2) NOT NULL,
+    note TEXT
 );
 
-CREATE TABLE orderm_servico_materiais (
+CREATE TABLE work_order_materials (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    orcamento_id BIGINT NOT NULL,
-    quantidade INTEGER NOT NULL,
+    budget_id BIGINT NOT NULL,
+    quantity INTEGER NOT NULL,
     material_id BIGINT NOT NULL,
-    valor NUMERIC(10,2) NOT NULL,
-    observacao TEXT
+    price NUMERIC(10,2) NOT NULL,
+    note TEXT
 );
 
-CREATE TABLE orderm_servico_servicos (
+CREATE TABLE work_order_services (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    orcamento_id BIGINT NOT NULL,
-    quantidade INTEGER NOT NULL,
-    servico_id BIGINT NOT NULL,
-    valor NUMERIC(10,2) NOT NULL,
-    observacao TEXT
+    budget_id BIGINT NOT NULL,
+    quantity INTEGER NOT NULL,
+    service_id BIGINT NOT NULL,
+    price NUMERIC(10,2) NOT NULL,
+    note TEXT
 );
 
-CREATE TABLE realizado (
+CREATE TABLE done (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    cliente_id BIGINT NOT NULL,
-    sistema VARCHAR(255) NOT NULL,
-    quantidade_folhas VARCHAR(255) NOT NULL,
-    valor_total NUMERIC(10,2) NOT NULL,
-    observacao TEXT
+    customer_id BIGINT NOT NULL,
+    `system` VARCHAR(255) NOT NULL,
+    quantity_glass_sheets VARCHAR(255) NOT NULL,
+    total_price NUMERIC(10,2) NOT NULL,
+    note TEXT
 );
 
-CREATE TABLE realizado_materiais (
+CREATE TABLE done_materials (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    orcamento_id BIGINT NOT NULL,
-    quantidade INTEGER NOT NULL,
+    budget_id BIGINT NOT NULL,
+    quantity INTEGER NOT NULL,
     material_id BIGINT NOT NULL,
-    valor NUMERIC(10,2) NOT NULL,
-    observacao TEXT
+    price NUMERIC(10,2) NOT NULL,
+    note TEXT
 );
 
-CREATE TABLE realizado_servicos (
+CREATE TABLE done_services (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    orcamento_id BIGINT NOT NULL,
-    quantidade INTEGER NOT NULL,
-    servico_id BIGINT NOT NULL,
-    valor NUMERIC(10,2) NOT NULL,
-    observacao TEXT
+    budget_id BIGINT NOT NULL,
+    quantity INTEGER NOT NULL,
+    service_id BIGINT NOT NULL,
+    price NUMERIC(10,2) NOT NULL,
+    note TEXT
 );
 
-CREATE TABLE grupo (
+CREATE TABLE `group` (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(255) NOT NULL,
-    descricao VARCHAR(255)
+    name VARCHAR(255) NOT NULL,
+    description VARCHAR(255)
 );
 
-CREATE TABLE permissao (
+CREATE TABLE permission (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(255) NOT NULL
+    name VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE usuario (
+CREATE TABLE user (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL,
     login VARCHAR(255) NOT NULL,
-    senha VARCHAR(255) NOT NULL,
-    ativo BOOLEAN NOT NULL
+    password VARCHAR(255) NOT NULL,
+    main_group_id BIGINT NOT NULL,
+    active BOOLEAN NOT NULL
 );
 
-CREATE TABLE usuario_grupo (
-    usuario_id BIGINT NOT NULL,
-    grupo_id BIGINT NOT NULL,
-    PRIMARY KEY (usuario_id, grupo_id)
+CREATE TABLE user_group (
+    user_id BIGINT NOT NULL,
+    group_id BIGINT NOT NULL,
+    PRIMARY KEY (user_id, group_id)
 );
 
-CREATE TABLE grupo_permissao (
-    grupo_id BIGINT NOT NULL,
-    permissao_id BIGINT NOT NULL,
-PRIMARY KEY (grupo_id, permissao_id)
+CREATE TABLE group_permission (
+    group_id BIGINT NOT NULL,
+    permission_id BIGINT NOT NULL,
+PRIMARY KEY (group_id, permission_id)
 );

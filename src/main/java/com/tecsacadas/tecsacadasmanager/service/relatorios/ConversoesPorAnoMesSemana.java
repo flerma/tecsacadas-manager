@@ -1,6 +1,6 @@
 package com.tecsacadas.tecsacadasmanager.service.relatorios;
 
-import com.tecsacadas.tecsacadasmanager.repository.AcompanhamentoLeadRepository;
+import com.tecsacadas.tecsacadasmanager.repository.LeadFollowUpRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -16,11 +16,11 @@ public class ConversoesPorAnoMesSemana {
     public static final String NOME_ARQUIVO = "RelatorioConversoesPorAnoMesSemana_Ano_%s.xlsx";
     public static final String NOME_PLANILHA = "Relatório";
 
-    private final AcompanhamentoLeadRepository acompanhamentoLeadRepository;
+    private final LeadFollowUpRepository leadFollowUpRepository;
     private final ExcelService excelService;
 
     @SneakyThrows
-    public void gerar(Integer ano) {
+    public void generate(Integer ano) {
 
         var workbook = excelService.criarWorkbook();
         var largurasColunas = List.of(2000, 2000, 3000, 7000);
@@ -29,7 +29,7 @@ public class ConversoesPorAnoMesSemana {
 
         excelService.criarHeaderRow(sheet, workbook, cabecalhos);
 
-        var conversoesPorMesAnoSemana = acompanhamentoLeadRepository.findConversoesPorMesAnoSemana(ano);
+        var conversoesPorMesAnoSemana = leadFollowUpRepository.findConversoesPorMesAnoSemana(ano);
         int i = 1;
         for (var linha : conversoesPorMesAnoSemana) {
             var valores = List.of(

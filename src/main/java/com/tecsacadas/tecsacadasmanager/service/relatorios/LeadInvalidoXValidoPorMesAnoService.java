@@ -1,6 +1,6 @@
 package com.tecsacadas.tecsacadasmanager.service.relatorios;
 
-import com.tecsacadas.tecsacadasmanager.repository.AcompanhamentoLeadRepository;
+import com.tecsacadas.tecsacadasmanager.repository.LeadFollowUpRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -15,11 +15,11 @@ public class LeadInvalidoXValidoPorMesAnoService {
 
     public static final String NOME_ARQUIVO = "LeadsValidosXInvalidosPorAno_%s_Mes_%s.xlsx";
     public static final String NOME_PLANILHA = "Relatório";
-    private final AcompanhamentoLeadRepository acompanhamentoLeadRepository;
+    private final LeadFollowUpRepository leadFollowUpRepository;
     private final ExcelService excelService;
 
     @SneakyThrows
-    public void gerar(Integer ano, Integer mes) {
+    public void generate(Integer ano, Integer mes) {
 
         var workbook = excelService.criarWorkbook();
         var largurasColunas = List.of(2000, 2000, 7000, 7000);
@@ -28,8 +28,8 @@ public class LeadInvalidoXValidoPorMesAnoService {
 
         excelService.criarHeaderRow(sheet, workbook, cabecalhos);
 
-        var leadsValidos = acompanhamentoLeadRepository.findLeadsValidos(ano, mes);
-        var leadsInvalidos = acompanhamentoLeadRepository.findLeadsInvalidos(ano, mes);
+        var leadsValidos = leadFollowUpRepository.findLeadsValidos(ano, mes);
+        var leadsInvalidos = leadFollowUpRepository.findLeadsInvalidos(ano, mes);
 
         var valores = List.of(
                 ano.toString(),

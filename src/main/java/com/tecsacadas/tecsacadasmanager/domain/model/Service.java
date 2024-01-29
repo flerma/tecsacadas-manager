@@ -1,5 +1,6 @@
 package com.tecsacadas.tecsacadasmanager.domain.model;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +17,7 @@ import java.math.BigDecimal;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Material {
+public class Service {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

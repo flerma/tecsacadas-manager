@@ -1,53 +1,56 @@
-ALTER TABLE orcamento
-    ADD CONSTRAINT fk_orcamento_cliente FOREIGN KEY (cliente_id) REFERENCES cliente (id);
+ALTER TABLE budget
+    ADD CONSTRAINT fk_budget_customer FOREIGN KEY (customer_id) REFERENCES customer (id);
 
-ALTER TABLE orcamento_materiais
-    ADD CONSTRAINT fk_orcamento_materiais_orcamento FOREIGN KEY (orcamento_id) REFERENCES orcamento (id);
+ALTER TABLE budget_materials
+    ADD CONSTRAINT fk_budget_materials_budget FOREIGN KEY (budget_id) REFERENCES budget (id);
 
-ALTER TABLE orcamento_materiais
-    ADD CONSTRAINT fk_orcamento_materiais_material FOREIGN KEY (material_id) REFERENCES material (id);
+ALTER TABLE budget_materials
+    ADD CONSTRAINT fk_budget_materials_material FOREIGN KEY (material_id) REFERENCES material (id);
 
-ALTER TABLE orcamento_servicos
-    ADD CONSTRAINT fk_orcamento_servicos_orcamento FOREIGN KEY (orcamento_id) REFERENCES orcamento (id);
+ALTER TABLE budget_services
+    ADD CONSTRAINT fk_budget_services_budget FOREIGN KEY (budget_id) REFERENCES budget (id);
 
-ALTER TABLE orcamento_servicos
-    ADD CONSTRAINT fk_orcamento_servicos_servico FOREIGN KEY (servico_id) REFERENCES servico (id);
+ALTER TABLE budget_services
+    ADD CONSTRAINT fk_budget_services_service FOREIGN KEY (service_id) REFERENCES service (id);
 
-ALTER TABLE orderm_servico
-    ADD CONSTRAINT fk_orderm_servico_cliente FOREIGN KEY (cliente_id) REFERENCES cliente (id);
+ALTER TABLE work_order
+    ADD CONSTRAINT fk_work_order_customer FOREIGN KEY (customer_id) REFERENCES customer (id);
 
-ALTER TABLE orderm_servico_materiais
-    ADD CONSTRAINT fk_orderm_servico_materiais_orcamento FOREIGN KEY (orcamento_id) REFERENCES orcamento (id);
+ALTER TABLE work_order_materials
+    ADD CONSTRAINT fk_work_order_materials_budget FOREIGN KEY (budget_id) REFERENCES budget (id);
 
-ALTER TABLE orderm_servico_materiais
-    ADD CONSTRAINT fk_orderm_servico_materiais_material FOREIGN KEY (material_id) REFERENCES material (id);
+ALTER TABLE work_order_materials
+    ADD CONSTRAINT fk_work_order_materials_material FOREIGN KEY (material_id) REFERENCES material (id);
 
-ALTER TABLE orderm_servico_servicos
-    ADD CONSTRAINT fk_orderm_servico_servicos_orcamento FOREIGN KEY (orcamento_id) REFERENCES orcamento (id);
+ALTER TABLE work_order_services
+    ADD CONSTRAINT fk_work_order_services_budget FOREIGN KEY (budget_id) REFERENCES budget (id);
 
-ALTER TABLE orderm_servico_servicos
-    ADD CONSTRAINT fk_orderm_servico_servicos_servico FOREIGN KEY (servico_id) REFERENCES servico (id);
+ALTER TABLE work_order_services
+    ADD CONSTRAINT fk_work_order_services_service FOREIGN KEY (service_id) REFERENCES service (id);
 
-ALTER TABLE realizado
-    ADD CONSTRAINT fk_realizado_cliente FOREIGN KEY (cliente_id) REFERENCES cliente (id);
+ALTER TABLE done
+    ADD CONSTRAINT fk_done_customer FOREIGN KEY (customer_id) REFERENCES customer (id);
 
-ALTER TABLE realizado_materiais
-    ADD CONSTRAINT fk_realizado_materiais_orcamento FOREIGN KEY (orcamento_id) REFERENCES orcamento (id);
+ALTER TABLE done_materials
+    ADD CONSTRAINT fk_done_materials_budget FOREIGN KEY (budget_id) REFERENCES budget (id);
 
-ALTER TABLE realizado_materiais
-    ADD CONSTRAINT fk_realizado_materiais_material FOREIGN KEY (material_id) REFERENCES material (id);
+ALTER TABLE done_materials
+    ADD CONSTRAINT fk_done_materials_material FOREIGN KEY (material_id) REFERENCES material (id);
 
-ALTER TABLE realizado_servicos
-    ADD CONSTRAINT fk_realizado_servicos_orcamento FOREIGN KEY (orcamento_id) REFERENCES orcamento (id);
+ALTER TABLE done_services
+    ADD CONSTRAINT fk_done_services_budget FOREIGN KEY (budget_id) REFERENCES budget (id);
 
-ALTER TABLE realizado_servicos
-    ADD CONSTRAINT fk_realizado_servicos_servico FOREIGN KEY (servico_id) REFERENCES servico (id);
+ALTER TABLE done_services
+    ADD CONSTRAINT fk_done_services_service FOREIGN KEY (service_id) REFERENCES service (id);
 
-ALTER TABLE usuario_grupo
-    ADD CONSTRAINT fk_usuario_grupo_usuario FOREIGN KEY (usuario_id) REFERENCES usuario (id);
+ALTER TABLE user_group
+    ADD CONSTRAINT fk_user_group_user FOREIGN KEY (user_id) REFERENCES user (id);
 
-ALTER TABLE usuario_grupo
-    ADD CONSTRAINT fk_usuario_grupo_grupo FOREIGN KEY (grupo_id) REFERENCES grupo (id);
+ALTER TABLE user_group
+    ADD CONSTRAINT fk_user_group_group FOREIGN KEY (group_id) REFERENCES `group` (id);
 
-ALTER TABLE grupo_permissao
-    ADD CONSTRAINT fk_grupo_permissao_grupo FOREIGN KEY (grupo_id) REFERENCES grupo (id);
+ALTER TABLE group_permission
+    ADD CONSTRAINT fk_group_permission_group FOREIGN KEY (group_id) REFERENCES `group` (id);
+
+ALTER TABLE user
+    ADD CONSTRAINT fk_user_group FOREIGN KEY (main_group_id) REFERENCES `group` (id);

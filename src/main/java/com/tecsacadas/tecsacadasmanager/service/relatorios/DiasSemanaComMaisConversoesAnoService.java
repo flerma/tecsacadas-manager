@@ -1,6 +1,6 @@
 package com.tecsacadas.tecsacadasmanager.service.relatorios;
 
-import com.tecsacadas.tecsacadasmanager.repository.AcompanhamentoLeadRepository;
+import com.tecsacadas.tecsacadasmanager.repository.LeadFollowUpRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -18,11 +18,11 @@ public class DiasSemanaComMaisConversoesAnoService {
     public static final String NOME_PLANILHA = "Relatório";
     private DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    private final AcompanhamentoLeadRepository acompanhamentoLeadRepository;
+    private final LeadFollowUpRepository leadFollowUpRepository;
     private final ExcelService excelService;
 
     @SneakyThrows
-    public void gerar(Integer ano) {
+    public void generate(Integer ano) {
 
         var workbook = excelService.criarWorkbook();
         var largurasColunas = List.of(3000, 6000, 7000);
@@ -31,7 +31,7 @@ public class DiasSemanaComMaisConversoesAnoService {
 
         excelService.criarHeaderRow(sheet, workbook, cabecalhos);
 
-        var conversoesPorAno = acompanhamentoLeadRepository.findDiasSemanaComMaisConversoesAno(ano);
+        var conversoesPorAno = leadFollowUpRepository.findDiasSemanaComMaisConversoesAno(ano);
         var conversoesPorAnoLimitado = conversoesPorAno.stream().limit(20).toList();
         int i = 1;
         for (var linha : conversoesPorAnoLimitado) {

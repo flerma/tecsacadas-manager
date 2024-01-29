@@ -15,32 +15,32 @@ public class ReportService {
 
     private final RelatorioRepository relatorioRepository;
 
-    public List<ReportDto> getAllRelatorios() {
+    public List<ReportDto> getAllReports() {
         return relatorioRepository.findAll().stream()
                 .map(Report::toDto)
                 .toList();
     }
 
-    public ReportDto getRelatorioById(Long id) {
+    public ReportDto getReportById(Long id) {
         return relatorioRepository.findById(id)
                 .map(Report::toDto)
                 .orElseThrow(() -> new RelatorioNotFoundException("Relatorio não encontrado"));
     }
 
-    public ReportDto createRelatorio(ReportDto reportDto) {
+    public ReportDto createReport(ReportDto reportDto) {
         return relatorioRepository.save(reportDto.toModel()).toDto();
     }
 
-    public ReportDto updateRelatorio(Long id, ReportDto reportDto) {
-        Report existente = relatorioRepository.findById(id)
+    public ReportDto updateReport(Long id, ReportDto reportDto) {
+        Report existingReport = relatorioRepository.findById(id)
                 .orElseThrow(() -> new RelatorioNotFoundException("Relatorio não encontrado"));
-        existente.setSource(reportDto.getSource());
-        existente.setName(reportDto.getName());
-        existente.setIdentifier(reportDto.getIdentifier());
-        return relatorioRepository.save(existente).toDto();
+        existingReport.setSource(reportDto.getSource());
+        existingReport.setName(reportDto.getName());
+        existingReport.setIdentifier(reportDto.getIdentifier());
+        return relatorioRepository.save(existingReport).toDto();
     }
 
-    public void deleteRelatorio(Long id) {
+    public void createReport(Long id) {
         relatorioRepository.deleteById(id);
     }
 }

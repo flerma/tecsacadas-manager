@@ -20,8 +20,8 @@ public class LoginController {
 
     private final LoginService loginService;
 
-    @PostMapping("/autenticar")
+    @PostMapping("/authenticate")
     public ResponseEntity<Boolean> autenticar(@Valid @RequestBody LoginDto loginDto) {
-        return ResponseEntity.ok(loginService.autenticar(loginDto.getLogin(), loginDto.getSenha()));
+        return ResponseEntity.ok(loginService.authenticate(loginDto.getLogin(), loginDto.getPassword()));
     }
 }

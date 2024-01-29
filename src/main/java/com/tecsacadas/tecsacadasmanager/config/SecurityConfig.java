@@ -22,16 +22,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+        //auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/**").permitAll()
-                .antMatchers("/clientes/**").hasRole("USER")
-                .antMatchers("/clientes/**").hasRole("ADMIN")
-                .antMatchers("/actuator/**").hasRole("ADMIN")
+//                .antMatchers("/clientes/**").hasRole("USER")
+//                .antMatchers("/clientes/**").hasRole("ADMIN")
+//                .antMatchers("/actuator/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic()

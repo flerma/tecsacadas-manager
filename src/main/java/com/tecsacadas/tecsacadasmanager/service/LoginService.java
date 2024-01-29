@@ -1,24 +1,21 @@
 package com.tecsacadas.tecsacadasmanager.service;
 
-import com.tecsacadas.tecsacadasmanager.dto.UsuarioDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class LoginService {
 
-    private final UsuarioService usuarioService;
+    private final UserService userService;
 
-    public boolean autenticar(String usuario, String senha) {
-        var usuarioLocalizado = usuarioService.buscarPorLogin(usuario);
+    public boolean authenticate(String user, String password) {
+        var locatedUser = userService.buscarPorLogin(user);
 
-        if (!usuarioLocalizado.isPresent())
+        if (locatedUser.isEmpty())
             throw new RuntimeException("Usuário não encontrado");
 
-        return usuario.equals(usuarioLocalizado.get().getLogin())
-               && senha.equals(usuarioLocalizado.get().getSenha());
+        return user.equals(locatedUser.get().getLogin())
+               && password.equals(locatedUser.get().getPassword());
     }
 }
