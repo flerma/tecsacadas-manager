@@ -19,42 +19,42 @@ import java.util.List;
 @Service
 public class ExcelService {
 
-    public Workbook criarWorkbook() {
+    public Workbook createWorkbook() {
         return new XSSFWorkbook();
     }
 
-    public Sheet criarSheet(Workbook workbook, String nomePlanilha, List<Integer> largurasColunas) {
-        Sheet sheet = workbook.createSheet(nomePlanilha);
-        for (int i = 0; i < largurasColunas.size(); i++) {
-            sheet.setColumnWidth(i, largurasColunas.get(i));
+    public Sheet createSheet(Workbook workbook, String sheetsName, List<Integer> columnWidth) {
+        Sheet sheet = workbook.createSheet(sheetsName);
+        for (int i = 0; i < columnWidth.size(); i++) {
+            sheet.setColumnWidth(i, columnWidth.get(i));
         }
         return sheet;
     }
 
-    public Row criarHeaderRow(Sheet sheet, Workbook workbook, List<String> cabecalhos) {
+    public Row createHeaderRow(Sheet sheet, Workbook workbook, List<String> headers) {
         Row header = sheet.createRow(0);
-        CellStyle headerStyle = criarHeaderStyle(workbook);
-        for (int i = 0; i < cabecalhos.size(); i++) {
+        CellStyle headerStyle = createHeaderStyle(workbook);
+        for (int i = 0; i < headers.size(); i++) {
             Cell headerCell = header.createCell(i);
-            headerCell.setCellValue(cabecalhos.get(i));
+            headerCell.setCellValue(headers.get(i));
             headerCell.setCellStyle(headerStyle);
         }
         return header;
     }
 
-    public void adicionarLinha(Sheet sheet, int numeroLinha, List<String> valoresCelula) {
-        Row row = sheet.createRow(numeroLinha);
-        for (int i = 0; i < valoresCelula.size(); i++) {
+    public void addLine(Sheet sheet, int lineNumber, List<String> cellValues) {
+        Row row = sheet.createRow(lineNumber);
+        for (int i = 0; i < cellValues.size(); i++) {
             Cell cell = row.createCell(i);
-            cell.setCellValue(valoresCelula.get(i));
+            cell.setCellValue(cellValues.get(i));
         }
     }
 
-    public void salvarArquivo(Workbook workbook, String nomeArquivo) {
+    public void saveFile(Workbook workbook, String filename) {
         try {
             File currDir = new File(".");
             String path = currDir.getAbsolutePath();
-            String fileLocation = path.substring(0, path.length() - 1) + nomeArquivo;
+            String fileLocation = path.substring(0, path.length() - 1) + filename;
             FileOutputStream outputStream = new FileOutputStream(fileLocation);
             workbook.write(outputStream);
             workbook.close();
@@ -63,7 +63,7 @@ public class ExcelService {
         }
     }
 
-    private CellStyle criarHeaderStyle(Workbook workbook) {
+    private CellStyle createHeaderStyle(Workbook workbook) {
         CellStyle headerStyle = workbook.createCellStyle();
         headerStyle.setFillForegroundColor(IndexedColors.DARK_BLUE.getIndex());
         headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);

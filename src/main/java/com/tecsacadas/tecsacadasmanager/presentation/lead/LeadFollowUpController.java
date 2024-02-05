@@ -26,7 +26,6 @@ import org.springframework.web.multipart.MultipartFile;
 public class LeadFollowUpController {
 
     private final LeadFollowUpService leadFollowUpService;
-    private final UploadValidator uploadValidator;
 
     @Operation(summary = "Importar planilha de leads",
             description = "Permite importar a planilha de leads para a base de dados permitindo a geração de reletórios relacionados.")
@@ -73,8 +72,8 @@ public class LeadFollowUpController {
     @ApiResponse(responseCode = "200",
             description = "Sucesso")
     @GetMapping("/todos-relatorios/{ano}/{mes}")
-    public ResponseEntity<Void> gerarTodosRelatorios(@PathVariable Integer ano, @PathVariable Integer mes) {
-        leadFollowUpService.gerarTodosRelatorios(ano, mes);
+    public ResponseEntity<Void> generateAllReports(@PathVariable Integer ano, @PathVariable Integer mes) {
+        leadFollowUpService.generateAllReports(ano, mes);
         return ResponseEntity.ok().build();
     }
 
@@ -86,8 +85,8 @@ public class LeadFollowUpController {
     @ApiResponse(responseCode = "200",
             description = "Sucesso")
     @GetMapping("/conversoes-por-ano-mes/{ano}")
-    public ResponseEntity<Void> gerarConversoesPorAnoMes(@PathVariable Integer ano) {
-        leadFollowUpService.gerarConversoesPorAnoMes(ano);
+    public ResponseEntity<Void> generateConversionsPerYearMonth(@PathVariable Integer ano) {
+        leadFollowUpService.generateConversionsPerYearMonth(ano);
         return ResponseEntity.ok().build();
     }
 
@@ -102,8 +101,8 @@ public class LeadFollowUpController {
     @ApiResponse(responseCode = "200",
             description = "Sucesso")
     @GetMapping("/dias-semana-mais-conversoes-mes/{ano}/{mes}")
-    public ResponseEntity<Void> gerarDiasSemanaComMaisConversoesMes(@PathVariable Integer ano, @PathVariable Integer mes) {
-        leadFollowUpService.gerarDiasSemanaComMaisConversoesMes(ano, mes);
+    public ResponseEntity<Void> generateDaysOfWeekWithMoreConversionsMonth(@PathVariable Integer ano, @PathVariable Integer mes) {
+        leadFollowUpService.generateDaysOfWeekWithMoreConversionsMonth(ano, mes);
         return ResponseEntity.ok().build();
     }
 
@@ -115,8 +114,8 @@ public class LeadFollowUpController {
     @ApiResponse(responseCode = "200",
             description = "Sucesso")
     @GetMapping("/dias-semana-mais-conversoes-ano/{ano}")
-    public ResponseEntity<Void> gerarDiasSemanaComMaisConversoesAno(@PathVariable Integer ano) {
-        leadFollowUpService.gerarLocalDiasSemanaComMaisConversoesAno(ano);
+    public ResponseEntity<Void> generateDaysOfWeekWithMoreConversionsYear(@PathVariable Integer ano) {
+        leadFollowUpService.generateDaysOfWeekWithMoreConversionsYear(ano);
         return ResponseEntity.ok().build();
     }
 
@@ -128,8 +127,8 @@ public class LeadFollowUpController {
     @ApiResponse(responseCode = "200",
             description = "Sucesso")
     @GetMapping("/conversoes-por-ano-mes-semana/{ano}")
-    public ResponseEntity<Void> gerarConversoesPorAnoMesSemana(@PathVariable Integer ano) {
-        leadFollowUpService.gerarConversoesPorAnoMesSemana(ano);
+    public ResponseEntity<Void> generateConversionsPerYearMonthWeek(@PathVariable Integer ano) {
+        leadFollowUpService.generateConversionsPerYearMonthWeek(ano);
         return ResponseEntity.ok().build();
     }
 
@@ -144,8 +143,8 @@ public class LeadFollowUpController {
     @ApiResponse(responseCode = "200",
             description = "Sucesso")
     @GetMapping("/leads-invalidos-e-validos-por-ano-mes/{ano}/{mes}")
-    public ResponseEntity<Void> gerarLeadsValidosXInvalidosPorAnoMes(@PathVariable Integer ano, @PathVariable Integer mes) {
-        leadFollowUpService.gerarLeadsValidosXInvalidosPorAnoMes(ano, mes);
+    public ResponseEntity<Void> generateValidXInvalidLeadsPerYearMonth(@PathVariable Integer ano, @PathVariable Integer mes) {
+        leadFollowUpService.generateValidXInvalidLeadsPerYearMonth(ano, mes);
         return ResponseEntity.ok().build();
     }
 }

@@ -47,6 +47,6 @@ public class ReportService {
     }
 
     public ByteArrayInputStream generateReportByIdentifier(String identifier, Integer year, Integer month) {
-        return leadFollowUpService.gerarDownloadDiasSemanaComMaisConversoesAno(year);
+        return leadFollowUpService.generateDownloadDaysOfWeekWithMoreConversionsYear(year);
     }
 }

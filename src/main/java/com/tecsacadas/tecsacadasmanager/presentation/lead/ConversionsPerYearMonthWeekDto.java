@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ConversoesPorMesAnoSemanaDto {
+public class ConversionsPerYearMonthWeekDto {
 
-    private Integer ano;
-    private Integer mes;
-    private Integer semana;
-    private Long conversoes;
+    private Integer year;
+    private Integer month;
+    private Integer week;
+    private Long conversions;
 }

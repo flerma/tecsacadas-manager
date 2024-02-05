@@ -1,7 +1,7 @@
 package com.tecsacadas.tecsacadasmanager.core.report;
 
 import com.tecsacadas.tecsacadasmanager.core.lead.LeadFollowUp;
-import com.tecsacadas.tecsacadasmanager.core.lead.LeadFollowUpColunas;
+import com.tecsacadas.tecsacadasmanager.core.lead.LeadFollowUpColumns;
 import com.tecsacadas.tecsacadasmanager.data.db.lead.LeadFollowUpRepository;
 import com.tecsacadas.tecsacadasmanager.infrastructure.util.FileService;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +17,8 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.tecsacadas.tecsacadasmanager.core.lead.LeadFollowUpColunas.LOCAL;
-import static com.tecsacadas.tecsacadasmanager.core.lead.LeadFollowUpColunas.NOTE;
+import static com.tecsacadas.tecsacadasmanager.core.lead.LeadFollowUpColumns.LOCAL;
+import static com.tecsacadas.tecsacadasmanager.core.lead.LeadFollowUpColumns.NOTE;
 import static org.springframework.util.StringUtils.hasLength;
 
 @Service
@@ -83,23 +83,23 @@ public class LeadFileImportService {
 
     private static void buidLeadFollowUpEntity(Cell cell, LeadFollowUp leadFollowUp) {
 
-        if (cell.getColumnIndex() == LeadFollowUpColunas.DATA.getColumnNumber())
+        if (cell.getColumnIndex() == LeadFollowUpColumns.DATA.getColumnNumber())
             leadFollowUp.setDataContato(cell.getDateCellValue().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-        else if (cell.getColumnIndex() == LeadFollowUpColunas.LOCAL.getColumnNumber())
+        else if (cell.getColumnIndex() == LeadFollowUpColumns.LOCAL.getColumnNumber())
             leadFollowUp.setLocalOrigem(cell.getStringCellValue());
-        else if (cell.getColumnIndex() == LeadFollowUpColunas.O_QUE_O_LEAD_PROCUROU.getColumnNumber())
+        else if (cell.getColumnIndex() == LeadFollowUpColumns.O_QUE_O_LEAD_PROCUROU.getColumnNumber())
             leadFollowUp.setProcurou(cell.getStringCellValue());
-        else if (cell.getColumnIndex() == LeadFollowUpColunas.TIPO_SERVICO_DESEJADO.getColumnNumber())
+        else if (cell.getColumnIndex() == LeadFollowUpColumns.TIPO_SERVICO_DESEJADO.getColumnNumber())
             leadFollowUp.setTipoServico(cell.getStringCellValue());
-        else if (cell.getColumnIndex() == LeadFollowUpColunas.CLIENTE_POTENCIAL.getColumnNumber())
+        else if (cell.getColumnIndex() == LeadFollowUpColumns.CLIENTE_POTENCIAL.getColumnNumber())
             leadFollowUp.setClientePotencial(cell.getStringCellValue());
-        else if (cell.getColumnIndex() == LeadFollowUpColunas.MOTIVO_POR_NAO_SER_POTENCIAL.getColumnNumber())
+        else if (cell.getColumnIndex() == LeadFollowUpColumns.MOTIVO_POR_NAO_SER_POTENCIAL.getColumnNumber())
             leadFollowUp.setMotivoNaoSerPotencial(cell.getStringCellValue());
-        else if (cell.getColumnIndex() == LeadFollowUpColunas.FORTMA_DE_CONTATO.getColumnNumber())
+        else if (cell.getColumnIndex() == LeadFollowUpColumns.FORTMA_DE_CONTATO.getColumnNumber())
             leadFollowUp.setFormaContato(cell.getStringCellValue());
-        else if (cell.getColumnIndex() == LeadFollowUpColunas.STATUS.getColumnNumber())
+        else if (cell.getColumnIndex() == LeadFollowUpColumns.STATUS.getColumnNumber())
             leadFollowUp.setStatus(cell.getStringCellValue());
-        else if (cell.getColumnIndex() == LeadFollowUpColunas.NOTE.getColumnNumber())
+        else if (cell.getColumnIndex() == LeadFollowUpColumns.NOTE.getColumnNumber())
             leadFollowUp.setObservacao(cell.getStringCellValue());
     }
 }

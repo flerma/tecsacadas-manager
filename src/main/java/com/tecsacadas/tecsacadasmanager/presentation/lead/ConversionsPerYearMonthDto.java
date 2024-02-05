@@ -5,16 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class DiasSemanaComMaisConversoesMesDto {
+public class ConversionsPerYearMonthDto {
 
-    private LocalDate data;
-    private String diaSemana;
-    private Long conversoes;
-
+    private Integer year;
+    private Integer month;
+    private Long conversions;
 }

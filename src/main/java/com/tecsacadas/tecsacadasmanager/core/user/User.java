@@ -45,14 +45,13 @@ public class User implements Serializable {
 
     private boolean active;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_group",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "group_id"))
-    @JsonManagedReference
     private Set<Group> groups;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne
     @JoinColumn(name = "main_group_id")
     private Group mainGroup;
 

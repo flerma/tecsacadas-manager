@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum LeadFollowUpColunas {
+public enum LeadFollowUpColumns {
 
     DATA(0, LeadFollowUpColumnType.DATE),
     LOCAL(1, LeadFollowUpColumnType.STRING),
@@ -20,13 +20,5 @@ public enum LeadFollowUpColunas {
     ;
 
     private final Integer columnNumber;
-    private final LeadFollowUpColumnType tipoColuna;
-
-    public static LeadFollowUpColunas getColuna(Integer numeroColuna) {
-        for (LeadFollowUpColunas coluna : LeadFollowUpColunas.values()) {
-            if (coluna.getColumnNumber().equals(numeroColuna))
-                return coluna;
-        }
-        return null;
-    }
+    private final LeadFollowUpColumnType columnType;
 }

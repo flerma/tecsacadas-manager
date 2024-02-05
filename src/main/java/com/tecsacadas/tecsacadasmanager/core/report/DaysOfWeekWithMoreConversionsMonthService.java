@@ -13,7 +13,7 @@ import java.util.List;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class DiasSemanaComMaisConversoesMesService {
+public class DaysOfWeekWithMoreConversionsMonthService {
 
     public static final String NOME_PLANILHA = "Relatório";
     public static final String NOME_ARQUIVO = "RelatorioDiasSemanaComMaisConversoesAno_%s_Mes_%s.xlsx";
@@ -25,26 +25,26 @@ public class DiasSemanaComMaisConversoesMesService {
     @SneakyThrows
     public void generate(Integer ano, Integer mes) {
 
-        var workbook = excelService.criarWorkbook();
+        var workbook = excelService.createWorkbook();
         var largurasColunas = List.of(3000, 6000, 7000);
-        var sheet = excelService.criarSheet(workbook, NOME_PLANILHA, largurasColunas);
+        var sheet = excelService.createSheet(workbook, NOME_PLANILHA, largurasColunas);
         var cabecalhos = List.of("Data", "Dia da Semana", "Total de Conversões");
 
-        excelService.criarHeaderRow(sheet, workbook, cabecalhos);
+        excelService.createHeaderRow(sheet, workbook, cabecalhos);
 
-        var conversoesPorMesAno = leadFollowUpRepository.findDiasSemanaComMaisConversoesMes(ano, mes);
+        var conversoesPorMesAno = leadFollowUpRepository.findDaysOfWeekWithMoreConversionsMonth(ano, mes);
         var conversoesPorMesAnoLimitado = conversoesPorMesAno.stream().limit(10).toList();
         int i = 1;
         for (var linha : conversoesPorMesAnoLimitado) {
             var valores = List.of(
-                    linha.getData().format(formatoData),
-                    linha.getDiaSemana().toString(),
-                    linha.getConversoes().toString()
+                    linha.getDate().format(formatoData),
+                    linha.getDayOfWeek().toString(),
+                    linha.getConversions().toString()
             );
-            excelService.adicionarLinha(sheet, i++, valores);
+            excelService.addLine(sheet, i++, valores);
         }
 
-        excelService.salvarArquivo(workbook, String.format(NOME_ARQUIVO, ano, mes));
+        excelService.saveFile(workbook, String.format(NOME_ARQUIVO, ano, mes));
 
         log.info(NOME_ARQUIVO + " gerado com sucesso!", ano, mes);
     }

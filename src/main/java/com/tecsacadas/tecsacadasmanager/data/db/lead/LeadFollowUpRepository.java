@@ -1,9 +1,10 @@
 package com.tecsacadas.tecsacadasmanager.data.db.lead;
 
 import com.tecsacadas.tecsacadasmanager.core.lead.LeadFollowUp;
-import com.tecsacadas.tecsacadasmanager.presentation.lead.ConversoesPorAnoMesDto;
-import com.tecsacadas.tecsacadasmanager.presentation.lead.ConversoesPorMesAnoSemanaDto;
-import com.tecsacadas.tecsacadasmanager.presentation.lead.DiasSemanaComMaisConversoesMesDto;
+import com.tecsacadas.tecsacadasmanager.presentation.lead.ConversionsPerYearMonthDto;
+import com.tecsacadas.tecsacadasmanager.presentation.lead.ConversionsPerYearMonthWeekDto;
+import com.tecsacadas.tecsacadasmanager.presentation.lead.DaysOfWeekWithMoreConversionsMonthDto;
+import com.tecsacadas.tecsacadasmanager.presentation.lead.DaysOfWeekWithMoreConversionsYearDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -19,36 +20,37 @@ public class LeadFollowUpRepository {
         return leadFollowUpDao.findAll();
     }
 
-    public List<ConversoesPorAnoMesDto> findConversoesPorMesAno(Integer ano) {
-        return leadFollowUpDao.findConversoesPorMesAno(ano).stream()
-                .map(ConversoesPorAnoMesResponse::toDto)
+    public List<ConversionsPerYearMonthDto> findConversionsPerYearMonth(Integer year) {
+        return leadFollowUpDao.findConversionsPerYearMonth(year).stream()
+                .map(ConversionsPerYearMonthResponse::toDto)
                 .toList();
     }
 
-    public List<DiasSemanaComMaisConversoesMesDto> findDiasSemanaComMaisConversoesMes(Integer ano, Integer mes) {
-        return leadFollowUpDao.findDiasSemanaComMaisConversoesMes(ano, mes).stream()
-                .map(DiasSemanaComMaisConversoesMesResponse::toDto)
+    public List<ConversionsPerYearMonthWeekDto> findConversionsPerYearMonthWeek(Integer year) {
+        return leadFollowUpDao.findConversionsPerYearMonthWeek(year).stream()
+                .map(ConversionsPerYearMonthWeekResponse::toDto)
                 .toList();
     }
 
-    public List<ConversoesPorMesAnoSemanaDto> findConversoesPorMesAnoSemana(Integer ano) {
-        return leadFollowUpDao.findConversoesPorMesAnoSemana(ano).stream()
-                .map(ConversoesPorMesAnoSemanaResponse::toDto)
+    public List<DaysOfWeekWithMoreConversionsMonthDto> findDaysOfWeekWithMoreConversionsMonth(Integer year, Integer month) {
+        return leadFollowUpDao.findDaysOfWeekWithMoreConversionsMonth(year, month).stream()
+                .map(DaysOfWeekWithMoreConversionsMonthResponse::toDto)
                 .toList();
     }
 
-    public List<DiasSemanaComMaisConversoesMesDto> findDiasSemanaComMaisConversoesAno(Integer ano) {
-        return leadFollowUpDao.findDiasSemanaComMaisConversoesAno(ano).stream()
-                .map(DiasSemanaComMaisConversoesMesResponse::toDto)
+
+    public List<DaysOfWeekWithMoreConversionsYearDto> findDaysOfWeekWithMoreConversionsYear(Integer year) {
+        return leadFollowUpDao.findDaysOfWeekWithMoreConversionsYear(year).stream()
+                .map(DaysOfWeekWithMoreConversionsYearResponse::toDto)
                 .toList();
     }
 
-    public Long findLeadsValidos(Integer ano, Integer mes) {
-        return leadFollowUpDao.findLeadsValidos(ano, mes);
+    public Long findValidLeads(Integer year, Integer month) {
+        return leadFollowUpDao.findValidLeads(year, month);
     }
 
-    public Long findLeadsInvalidos(Integer ano, Integer mes) {
-        return leadFollowUpDao.findLeadsInvalidos(ano, mes);
+    public Long findInvalidLeads(Integer year, Integer month) {
+        return leadFollowUpDao.findInvalidLeads(year, month);
     }
 
     public void deleteAll() {

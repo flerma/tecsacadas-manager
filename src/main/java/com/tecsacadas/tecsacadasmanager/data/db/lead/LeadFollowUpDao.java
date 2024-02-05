@@ -10,19 +10,19 @@ import java.util.List;
 interface LeadFollowUpDao extends JpaRepository<LeadFollowUp, Long> {
 
 
-    @Query(value = "SELECT new com.tecsacadas.tecsacadasmanager.data.db.lead.ConversoesPorAnoMesResponse(" +
+    @Query(value = "SELECT new com.tecsacadas.tecsacadasmanager.data.db.lead.ConversionsPerYearMonthResponse(" +
                    "               year(dataContato), " +
                    "               month(dataContato), " +
                    "               count(id)) " +
                    " FROM LeadFollowUp" +
-                   " WHERE year(dataContato) = :ano" +
+                   " WHERE year(dataContato) = :year" +
                    " GROUP by year(dataContato)," +
                    "          month(dataContato)" +
                    " ORDER BY year(dataContato)," +
                    "          month(dataContato)")
-    List<ConversoesPorAnoMesResponse> findConversoesPorMesAno(@Param("ano") Integer ano);
+    List<ConversionsPerYearMonthResponse> findConversionsPerYearMonth(@Param("year") Integer year);
 
-    @Query(value = "SELECT new com.tecsacadas.tecsacadasmanager.data.db.lead.DiasSemanaComMaisConversoesMesResponse(" +
+    @Query(value = "SELECT new com.tecsacadas.tecsacadasmanager.data.db.lead.DaysOfWeekWithMoreConversionsMonthResponse(" +
                    "  dataContato, " +
                    "  CASE weekday(dataContato)" +
                    "         WHEN 6 THEN 'Domingo'" +
@@ -36,14 +36,14 @@ interface LeadFollowUpDao extends JpaRepository<LeadFollowUp, Long> {
                    "  END," +
                    "  COUNT(id))" +
                    " FROM LeadFollowUp" +
-                   " WHERE extract(year from dataContato) = :ano" +
-                   "   AND extract(month from dataContato) = :mes" +
+                   " WHERE extract(year from dataContato) = :year" +
+                   "   AND extract(month from dataContato) = :month" +
                    " GROUP BY dataContato" +
                    " ORDER BY COUNT(id) desc")
-    List<DiasSemanaComMaisConversoesMesResponse> findDiasSemanaComMaisConversoesMes(@Param("ano") Integer ano,
-                                                                               @Param("mes") Integer mes);
+    List<DaysOfWeekWithMoreConversionsMonthResponse> findDaysOfWeekWithMoreConversionsMonth(@Param("year") Integer year,
+                                                                                            @Param("month") Integer month);
 
-    @Query(value = "SELECT new com.tecsacadas.tecsacadasmanager.data.db.lead.DiasSemanaComMaisConversoesMesResponse(" +
+    @Query(value = "SELECT new com.tecsacadas.tecsacadasmanager.data.db.lead.DaysOfWeekWithMoreConversionsYearResponse(" +
             "  dataContato, " +
             "  CASE weekday(dataContato)" +
             "         WHEN 6 THEN 'Domingo'" +
@@ -57,46 +57,46 @@ interface LeadFollowUpDao extends JpaRepository<LeadFollowUp, Long> {
             "  END," +
             "  COUNT(id))" +
             " FROM LeadFollowUp" +
-            " WHERE extract(year from dataContato) = :ano" +
+            " WHERE extract(year from dataContato) = :year" +
             " GROUP BY dataContato" +
             " ORDER BY COUNT(id) desc")
-    List<DiasSemanaComMaisConversoesMesResponse> findDiasSemanaComMaisConversoesAno(@Param("ano") Integer ano);
+    List<DaysOfWeekWithMoreConversionsYearResponse> findDaysOfWeekWithMoreConversionsYear(@Param("year") Integer year);
 
 
-    @Query(value = "SELECT new com.tecsacadas.tecsacadasmanager.data.db.lead.ConversoesPorMesAnoSemanaResponse(" +
+    @Query(value = "SELECT new com.tecsacadas.tecsacadasmanager.data.db.lead.ConversionsPerYearMonthWeekResponse(" +
                    "       year(dataContato)," +
                    "       month(dataContato)," +
                    "       floor((DayOfMonth(dataContato)-1)/7)+1," +
                    "       count(id))" +
                    " FROM LeadFollowUp" +
-                   " WHERE year(dataContato) = :ano" +
+                   " WHERE year(dataContato) = :year" +
                    " GROUP BY year(dataContato)," +
                    "          month(dataContato)," +
                    "          floor((DayOfMonth(dataContato)-1)/7)+1" +
                    " ORDER BY year(dataContato)," +
                    "          month(dataContato)," +
                    "          floor((DayOfMonth(dataContato)-1)/7)+1")
-    List<ConversoesPorMesAnoSemanaResponse> findConversoesPorMesAnoSemana(@Param("ano") Integer ano);
+    List<ConversionsPerYearMonthWeekResponse> findConversionsPerYearMonthWeek(@Param("year") Integer year);
 
     @Query(value = "SELECT count(id)" +
                    " FROM LeadFollowUp " +
-                   " WHERE month(dataContato) = :mes" +
-                   "   AND year(dataContato) = :ano" +
+                   " WHERE month(dataContato) = :month" +
+                   "   AND year(dataContato) = :year" +
                    "   AND coalesce(motivoNaoSerPotencial, '') = ''" +
                    " GROUP BY year(dataContato)," +
                    "          month(dataContato)" +
                    " ORDER BY year(dataContato)," +
                    "          month(dataContato)")
-    Long findLeadsValidos(@Param("ano") Integer ano, @Param("mes") Integer mes);
+    Long findValidLeads(@Param("year") Integer year, @Param("month") Integer month);
 
     @Query(value = "SELECT count(id)" +
             " FROM LeadFollowUp " +
-            " WHERE month(dataContato) = :mes" +
-            "   AND year(dataContato) = :ano" +
+            " WHERE month(dataContato) = :month" +
+            "   AND year(dataContato) = :year" +
             "   AND coalesce(motivoNaoSerPotencial, '') <> ''" +
             " GROUP BY year(dataContato)," +
             "          month(dataContato)" +
             " ORDER BY year(dataContato)," +
             "          month(dataContato)")
-    Long findLeadsInvalidos(@Param("ano") Integer ano, @Param("mes") Integer mes);
+    Long findInvalidLeads(@Param("year") Integer year, @Param("month") Integer month);
 }
