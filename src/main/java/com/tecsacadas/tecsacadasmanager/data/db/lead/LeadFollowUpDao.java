@@ -1,13 +1,12 @@
 package com.tecsacadas.tecsacadasmanager.data.db.lead;
 
-import com.tecsacadas.tecsacadasmanager.core.lead.LeadFollowUp;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-interface LeadFollowUpDao extends JpaRepository<LeadFollowUp, Long> {
+interface LeadFollowUpDao extends JpaRepository<LeadFollowUpEntity, Long> {
 
 
     @Query(value = "SELECT new com.tecsacadas.tecsacadasmanager.data.db.lead.ConversionsPerYearMonthResponse(" +
@@ -15,7 +14,7 @@ interface LeadFollowUpDao extends JpaRepository<LeadFollowUp, Long> {
                    "               month(dataContato), " +
                    "               count(id)) " +
                    " FROM LeadFollowUp" +
-                   " WHERE year(dataContato) = :year" +
+                   "Entity WHERE year(dataContato) = :year" +
                    " GROUP by year(dataContato)," +
                    "          month(dataContato)" +
                    " ORDER BY year(dataContato)," +
@@ -36,7 +35,7 @@ interface LeadFollowUpDao extends JpaRepository<LeadFollowUp, Long> {
                    "  END," +
                    "  COUNT(id))" +
                    " FROM LeadFollowUp" +
-                   " WHERE extract(year from dataContato) = :year" +
+                   "Entity WHERE extract(year from dataContato) = :year" +
                    "   AND extract(month from dataContato) = :month" +
                    " GROUP BY dataContato" +
                    " ORDER BY COUNT(id) desc")
@@ -57,7 +56,7 @@ interface LeadFollowUpDao extends JpaRepository<LeadFollowUp, Long> {
             "  END," +
             "  COUNT(id))" +
             " FROM LeadFollowUp" +
-            " WHERE extract(year from dataContato) = :year" +
+            "Entity WHERE extract(year from dataContato) = :year" +
             " GROUP BY dataContato" +
             " ORDER BY COUNT(id) desc")
     List<DaysOfWeekWithMoreConversionsYearResponse> findDaysOfWeekWithMoreConversionsYear(@Param("year") Integer year);
@@ -69,7 +68,7 @@ interface LeadFollowUpDao extends JpaRepository<LeadFollowUp, Long> {
                    "       floor((DayOfMonth(dataContato)-1)/7)+1," +
                    "       count(id))" +
                    " FROM LeadFollowUp" +
-                   " WHERE year(dataContato) = :year" +
+                   "Entity WHERE year(dataContato) = :year" +
                    " GROUP BY year(dataContato)," +
                    "          month(dataContato)," +
                    "          floor((DayOfMonth(dataContato)-1)/7)+1" +
@@ -79,7 +78,7 @@ interface LeadFollowUpDao extends JpaRepository<LeadFollowUp, Long> {
     List<ConversionsPerYearMonthWeekResponse> findConversionsPerYearMonthWeek(@Param("year") Integer year);
 
     @Query(value = "SELECT count(id)" +
-                   " FROM LeadFollowUp " +
+                   " FROM LeadFollowUpEntity " +
                    " WHERE month(dataContato) = :month" +
                    "   AND year(dataContato) = :year" +
                    "   AND coalesce(motivoNaoSerPotencial, '') = ''" +
@@ -90,7 +89,7 @@ interface LeadFollowUpDao extends JpaRepository<LeadFollowUp, Long> {
     Long findValidLeads(@Param("year") Integer year, @Param("month") Integer month);
 
     @Query(value = "SELECT count(id)" +
-            " FROM LeadFollowUp " +
+            " FROM LeadFollowUpEntity " +
             " WHERE month(dataContato) = :month" +
             "   AND year(dataContato) = :year" +
             "   AND coalesce(motivoNaoSerPotencial, '') <> ''" +

@@ -70,7 +70,7 @@ public class LeadFileImportService {
                         && !hasLength(cell.getStringCellValue()))
                     return leadFollowUpList;
 
-                buidLeadFollowUpEntity(cell, leadFollowUp);
+                buidLeadFollowUp(cell, leadFollowUp);
             }
             leadFollowUpList.add(leadFollowUp);
             i++;
@@ -81,7 +81,7 @@ public class LeadFileImportService {
         return leadFollowUpList;
     }
 
-    private static void buidLeadFollowUpEntity(Cell cell, LeadFollowUp leadFollowUp) {
+    private static void buidLeadFollowUp(Cell cell, LeadFollowUp leadFollowUp) {
 
         if (cell.getColumnIndex() == LeadFollowUpColumns.DATA.getColumnNumber())
             leadFollowUp.setDataContato(cell.getDateCellValue().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());

@@ -1,9 +1,9 @@
 package com.tecsacadas.tecsacadasmanager.core.lead;
 
-import com.tecsacadas.tecsacadasmanager.core.report.ConversionsPerYearMonthWeekService;
 import com.tecsacadas.tecsacadasmanager.core.report.ConversionsPerYearMonthService;
-import com.tecsacadas.tecsacadasmanager.core.report.DaysOfWeekWithMoreConversionsYearService;
+import com.tecsacadas.tecsacadasmanager.core.report.ConversionsPerYearMonthWeekService;
 import com.tecsacadas.tecsacadasmanager.core.report.DaysOfWeekWithMoreConversionsMonthService;
+import com.tecsacadas.tecsacadasmanager.core.report.DaysOfWeekWithMoreConversionsYearService;
 import com.tecsacadas.tecsacadasmanager.core.report.LeadFileImportService;
 import com.tecsacadas.tecsacadasmanager.core.report.ValidXInvalidLeadsPerYearMonthService;
 import com.tecsacadas.tecsacadasmanager.data.db.lead.LeadFollowUpRepository;

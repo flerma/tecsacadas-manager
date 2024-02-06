@@ -16,7 +16,7 @@ public class LeadFollowUpRepository {
 
     private final LeadFollowUpDao leadFollowUpDao;
 
-    public List<LeadFollowUp> findAll() {
+    public List<LeadFollowUpEntity> findAll() {
         return leadFollowUpDao.findAll();
     }
 
@@ -58,7 +58,10 @@ public class LeadFollowUpRepository {
     }
 
     public void saveAll(List<LeadFollowUp> leadFollowUpList) {
-        leadFollowUpDao.saveAll(leadFollowUpList);
+        List<LeadFollowUpEntity> leadFollowUpEntities = leadFollowUpList.stream()
+                .map(LeadFollowUpEntity::toEntity)
+                .toList();
+        leadFollowUpDao.saveAll(leadFollowUpEntities);
     }
 
 }
