@@ -19,7 +19,7 @@ public class ReportService {
 
     public List<ReportDto> getAllReports() {
         return reportRepository.findAll().stream()
-                .map(Report::toDto)
+                .map(ReportDto::toDto)
                 .toList();
     }
 
@@ -30,7 +30,7 @@ public class ReportService {
     }
 
     public ReportDto createReport(ReportDto reportDto) {
-        return reportRepository.save(reportDto.toModel()).toDto();
+        return reportRepository.save(reportDto.toDomain()).toDto();
     }
 
     public ReportDto updateReport(Long id, ReportDto reportDto) {

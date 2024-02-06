@@ -1,49 +1,35 @@
 package com.tecsacadas.tecsacadasmanager.core.group;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.tecsacadas.tecsacadasmanager.core.permission.Permission;
-import com.tecsacadas.tecsacadasmanager.presentation.group.GroupDto;
+import com.tecsacadas.tecsacadasmanager.data.db.group.GroupEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Data
-@Builder(toBuilder = true)
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonIgnoreProperties(ignoreUnknown = true)
-@Entity
-@Table(name = "`group`")
 public class Group implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
 
     private String description;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "group_permission",
-            joinColumns = @JoinColumn(name = "group_id"),
-            inverseJoinColumns = @JoinColumn(name = "permission_id"))
-    private Set<Permission> permissions = new HashSet<>();
+    private List<Permission> permissions;
 
-    public GroupDto toDto() {
-        return GroupDto.builder()
-                .id(id)
-                .name(name)
-                .description(description)
-                .permissions(permissions)
+    public static Group toDomain(GroupEntity groupEntity) {
+        return Group.builder()
+                .id(groupEntity.getId())
+                .name(groupEntity.getName())
+                .description(groupEntity.getDescription())
+                .permissions(groupEntity.getPermissions().stream().map(Permission::toDomain).toList())
                 .build();
     }
 }

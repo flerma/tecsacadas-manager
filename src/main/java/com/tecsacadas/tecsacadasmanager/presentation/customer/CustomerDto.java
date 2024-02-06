@@ -1,7 +1,7 @@
 package com.tecsacadas.tecsacadasmanager.presentation.customer;
 
 import com.tecsacadas.tecsacadasmanager.core.address.StateEnum;
-import com.tecsacadas.tecsacadasmanager.core.customer.Customer;
+import com.tecsacadas.tecsacadasmanager.data.db.customer.CustomerEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -53,8 +53,8 @@ public class CustomerDto {
     @NotNull(message = "CEP é obrigatório")
     private Long cep;
 
-    public Customer toModel() {
-        return Customer.builder()
+    public CustomerEntity toModel() {
+        return CustomerEntity.builder()
                 .id(id)
                 .name(name)
                 .cpf(cpf)

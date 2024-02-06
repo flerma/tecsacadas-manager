@@ -1,13 +1,12 @@
 package com.tecsacadas.tecsacadasmanager.data.db.group;
 
-import com.tecsacadas.tecsacadasmanager.core.group.Group;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-interface GroupDao extends JpaRepository<Group, Long> {
+interface GroupDao extends JpaRepository<GroupEntity, Long> {
 
-    Optional<Group> findByName(String nome);
+    Optional<GroupEntity> findByName(String nome);
 
-    Optional<Group> findById(Long id);
+    Optional<GroupEntity> findById(Long id);
 }

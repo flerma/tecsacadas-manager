@@ -1,8 +1,7 @@
 package com.tecsacadas.tecsacadasmanager.presentation.user;
 
-import com.tecsacadas.tecsacadasmanager.core.group.Group;
-import com.tecsacadas.tecsacadasmanager.core.user.User;
 import com.tecsacadas.tecsacadasmanager.core.user.UserService;
+import com.tecsacadas.tecsacadasmanager.presentation.group.GroupDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -29,27 +27,23 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public ResponseEntity<List<User>> findAll() {
-        List<User> users = userService.findAll();
-        return ResponseEntity.ok(users);
+    public ResponseEntity<List<UserDto>> findAll() {
+        return ResponseEntity.ok(userService.findAll());
     }
 
     @GetMapping("/grupo/{groupId}")
-    public ResponseEntity<Set<User>> findByGroupId(@PathVariable Long groupId) {
-        Set<User> users = userService.findByGroupId(groupId);
-        return ResponseEntity.ok(users);
+    public ResponseEntity<List<UserDto>> findByGroupId(@PathVariable Long groupId) {
+        return ResponseEntity.ok(userService.findByGroupId(groupId));
     }
 
     @GetMapping("/grupo-principal/{userId}")
-    public ResponseEntity<Group> findMainGroupByUserId(@PathVariable Long userId) {
-        Group group = userService.findMainGroupById(userId);
-        return ResponseEntity.ok(group);
+    public ResponseEntity<GroupDto> findMainGroupByUserId(@PathVariable Long userId) {
+        return ResponseEntity.ok(userService.findMainGroupById(userId));
     }
 
     @GetMapping("/lista-grupos/{userId}")
-    public ResponseEntity<Set<Group>> findGroupsById(@PathVariable Long userId) {
-        Set<Group> groups = userService.findGroupsById(userId);
-        return ResponseEntity.ok(groups);
+    public ResponseEntity<List<GroupDto>> findGroupsById(@PathVariable Long userId) {
+        return ResponseEntity.ok(userService.findGroupsById(userId));
     }
 
     @GetMapping("/{id}")

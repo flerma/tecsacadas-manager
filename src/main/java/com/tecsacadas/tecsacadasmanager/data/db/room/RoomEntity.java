@@ -1,4 +1,4 @@
-package com.tecsacadas.tecsacadasmanager.core.room;
+package com.tecsacadas.tecsacadasmanager.data.db.room;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,7 +15,7 @@ import javax.persistence.Id;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Room {
+public class RoomEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

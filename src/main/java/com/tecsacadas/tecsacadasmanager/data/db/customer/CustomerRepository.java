@@ -1,6 +1,5 @@
 package com.tecsacadas.tecsacadasmanager.data.db.customer;
 
-import com.tecsacadas.tecsacadasmanager.core.customer.Customer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -13,15 +12,15 @@ public class CustomerRepository {
 
     private final CustomerDao customerDao;
 
-    public Optional<Customer> findByCpf(Long cpf) {
+    public Optional<CustomerEntity> findByCpf(Long cpf) {
         return customerDao.findByCpf(cpf);
     }
 
-    public Optional<Customer> findById(Long id) {
+    public Optional<CustomerEntity> findById(Long id) {
         return customerDao.findById(id);
     }
 
-    public Customer save(Customer customer) {
+    public CustomerEntity save(CustomerEntity customer) {
         return customerDao.save(customer);
     }
 
@@ -29,7 +28,7 @@ public class CustomerRepository {
         customerDao.deleteById(id);
     }
 
-    public List<Customer> findAll() {
+    public List<CustomerEntity> findAll() {
         return customerDao.findAll();
     }
 }

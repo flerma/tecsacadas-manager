@@ -1,4 +1,4 @@
-package com.tecsacadas.tecsacadasmanager.core.customer;
+package com.tecsacadas.tecsacadasmanager.data.db.customer;
 
 
 import com.tecsacadas.tecsacadasmanager.core.address.StateEnum;
@@ -8,7 +8,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Data
 @Entity
@@ -16,7 +22,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "customer")
-public class Customer {
+public class CustomerEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

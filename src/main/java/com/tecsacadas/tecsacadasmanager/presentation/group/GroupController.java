@@ -1,6 +1,5 @@
 package com.tecsacadas.tecsacadasmanager.presentation.group;
 
-import com.tecsacadas.tecsacadasmanager.core.group.Group;
 import com.tecsacadas.tecsacadasmanager.core.group.GroupService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -27,13 +26,13 @@ public class GroupController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Group> findAll() {
+    public List<GroupDto> findAll() {
         return groupService.findlAll();
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Group findById(@PathVariable Long id) {
+    public GroupDto findById(@PathVariable Long id) {
         return groupService.findById(id);
     }
 

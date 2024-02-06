@@ -2,7 +2,6 @@ package com.tecsacadas.tecsacadasmanager.data.db.report;
 
 import com.tecsacadas.tecsacadasmanager.core.report.Report;
 import lombok.RequiredArgsConstructor;
-import net.bytebuddy.jar.asm.commons.Remapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,15 +14,15 @@ public class ReportRepository {
     private final ReportDao reportDao;
 
     public List<Report> findAll() {
-        return reportDao.findAll();
+        return reportDao.findAll().stream().map(ReportEntity::toDomain).toList();
     }
 
     public Optional<Report> findById(Long id) {
-        return reportDao.findById(id);
+        return reportDao.findById(id).map(ReportEntity::toDomain);
     }
 
     public Report save(Report report) {
-        return reportDao.save(report);
+        return reportDao.save(ReportEntity.toEntity(report)).toDomain();
     }
 
     public void deleteById(Long id) {

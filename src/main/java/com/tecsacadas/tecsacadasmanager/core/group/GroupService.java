@@ -1,13 +1,15 @@
 package com.tecsacadas.tecsacadasmanager.core.group;
 
 import com.tecsacadas.tecsacadasmanager.data.db.group.GroupRepository;
-import com.tecsacadas.tecsacadasmanager.presentation.group.GroupDto;
 import com.tecsacadas.tecsacadasmanager.infrastructure.error.exception.BusinessException;
+import com.tecsacadas.tecsacadasmanager.presentation.group.GroupDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
+import static com.tecsacadas.tecsacadasmanager.presentation.group.GroupDto.toDto;
 
 @Service
 @RequiredArgsConstructor
@@ -15,12 +17,13 @@ public class GroupService {
 
     private final GroupRepository groupRepository;
 
-    public List<Group> findlAll() {
-        return groupRepository.findAll();
+    public List<GroupDto> findlAll() {
+        return groupRepository.findAll().stream().map(GroupDto::toDtoStatic).toList();
     }
 
-    public Group findById(Long id) {
-        return groupRepository.findById(id).orElse(null);
+    public GroupDto findById(Long id) {
+        return groupRepository.findById(id).map(GroupDto::toDtoStatic)
+                .orElseThrow(() -> new BusinessException("Grupo não encontrado com o ID: " + id));
     }
 
     public GroupDto create(GroupDto group) {
@@ -28,7 +31,7 @@ public class GroupService {
         if (existingGroup.isPresent()) {
             throw new BusinessException("Grupo já existe com o nome: " + group.getName());
         } else {
-            return groupRepository.save(group.toModel()).toDto();
+            return toDto(groupRepository.save(group.toDomain()));
         }
     }
 
@@ -36,7 +39,7 @@ public class GroupService {
         Optional<Group> existingGroup = groupRepository.findById(id);
         if (existingGroup.isPresent()) {
             updatedGroup.setId(id);
-            return groupRepository.save(updatedGroup.toModel()).toDto();
+            return toDto(groupRepository.save(updatedGroup.toDomain()));
         } else {
             throw new BusinessException("Grupo não encontrado com o ID: " + id);
         }

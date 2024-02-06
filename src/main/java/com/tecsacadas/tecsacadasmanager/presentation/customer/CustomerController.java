@@ -1,7 +1,7 @@
 package com.tecsacadas.tecsacadasmanager.presentation.customer;
 
-import com.tecsacadas.tecsacadasmanager.core.customer.Customer;
 import com.tecsacadas.tecsacadasmanager.core.customer.CustomerService;
+import com.tecsacadas.tecsacadasmanager.data.db.customer.CustomerEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,8 +26,8 @@ public class CustomerController {
     private final CustomerService customerService;
 
     @GetMapping
-    public ResponseEntity<List<Customer>> findAll() {
-        List<Customer> customers = customerService.findAll();
+    public ResponseEntity<List<CustomerEntity>> findAll() {
+        List<CustomerEntity> customers = customerService.findAll();
         return ResponseEntity.ok(customers);
     }
 

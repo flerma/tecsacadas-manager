@@ -30,7 +30,16 @@ public class ReportDto {
 
     private String identifier;
 
-    public Report toModel() {
+    public static ReportDto toDto(Report report) {
+        return ReportDto.builder()
+                .id(report.getId())
+                .source(report.getSource())
+                .name(report.getName())
+                .identifier(report.getIdentifier())
+                .build();
+    }
+
+    public Report toDomain() {
         return Report.builder()
                 .id(id)
                 .source(source)
