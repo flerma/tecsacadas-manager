@@ -1,6 +1,7 @@
 package com.tecsacadas.tecsacadasmanager.presentation.customer;
 
 import com.tecsacadas.tecsacadasmanager.core.address.StateEnum;
+import com.tecsacadas.tecsacadasmanager.core.customer.Customer;
 import com.tecsacadas.tecsacadasmanager.data.db.customer.CustomerEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -53,20 +54,37 @@ public class CustomerDto {
     @NotNull(message = "CEP é obrigatório")
     private Long cep;
 
-    public CustomerEntity toModel() {
-        return CustomerEntity.builder()
-                .id(id)
-                .name(name)
-                .cpf(cpf)
-                .rg(rg)
-                .email(email)
-                .phone(phone)
-                .address(address)
-                .number(number)
-                .neighborhood(neighborhood)
-                .city(city)
-                .state(state)
-                .cep(cep)
+    public static Customer toDomain(CustomerDto updatedCustomer) {
+        return Customer.builder()
+                .id(updatedCustomer.getId())
+                .name(updatedCustomer.getName())
+                .cpf(updatedCustomer.getCpf())
+                .rg(updatedCustomer.getRg())
+                .email(updatedCustomer.getEmail())
+                .phone(updatedCustomer.getPhone())
+                .address(updatedCustomer.getAddress())
+                .number(updatedCustomer.getNumber())
+                .neighborhood(updatedCustomer.getNeighborhood())
+                .city(updatedCustomer.getCity())
+                .state(updatedCustomer.getState())
+                .cep(updatedCustomer.getCep())
+                .build();
+    }
+
+    public static CustomerDto toDto(Customer customer) {
+        return CustomerDto.builder()
+                .id(customer.getId())
+                .name(customer.getName())
+                .cpf(customer.getCpf())
+                .rg(customer.getRg())
+                .email(customer.getEmail())
+                .phone(customer.getPhone())
+                .address(customer.getAddress())
+                .number(customer.getNumber())
+                .neighborhood(customer.getNeighborhood())
+                .city(customer.getCity())
+                .state(customer.getState())
+                .cep(customer.getCep())
                 .build();
     }
 }

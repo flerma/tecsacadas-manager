@@ -38,7 +38,7 @@ public class DaysOfWeekWithMoreConversionsMonthService {
         for (var linha : conversoesPorMesAnoLimitado) {
             var valores = List.of(
                     linha.getDate().format(formatoData),
-                    linha.getDayOfWeek().toString(),
+                    linha.getDayOfWeek(),
                     linha.getConversions().toString()
             );
             excelService.addLine(sheet, i++, valores);

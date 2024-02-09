@@ -34,35 +34,6 @@ public class GroupDto implements Serializable {
                 .build();
     }
 
-    public static Group toDomainStatic(GroupDto group) {
-        return Group.builder()
-                .id(group.getId())
-                .name(group.getName())
-                .description(group.getDescription())
-                .permissions(group.getPermissions().stream().map(PermissionDto::toDomain).toList())
-                .build();
-    }
-
-    public GroupEntity toEntity() {
-        return GroupEntity.builder()
-                .id(id)
-                .name(name)
-                .description(description)
-                .permissions(permissions.stream().map(PermissionDto::toDto).toList())
-                .build();
-    }
-
-
-
-    public static GroupDto toDtoStatic(Group group) {
-        return GroupDto.builder()
-                .id(group.getId())
-                .name(group.getName())
-                .description(group.getDescription())
-                .permissions(group.getPermissions().stream().map(PermissionDto::toDto).toList())
-                .build();
-    }
-
     public Group toDomain() {
         return Group.builder()
                 .id(id)

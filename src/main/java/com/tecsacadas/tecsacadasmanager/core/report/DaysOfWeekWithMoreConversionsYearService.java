@@ -39,7 +39,7 @@ public class DaysOfWeekWithMoreConversionsYearService {
         for (var line : conversionsPerYearLimited) {
             var values = List.of(
                     line.getDate().format(dateFormat),
-                    line.getDayOfWeek().toString(),
+                    line.getDayOfWeek(),
                     line.getConversions().toString()
             );
             excelService.addLine(sheet, i++, values);

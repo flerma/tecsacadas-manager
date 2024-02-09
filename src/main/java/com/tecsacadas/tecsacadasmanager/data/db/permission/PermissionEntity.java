@@ -39,13 +39,6 @@ public class PermissionEntity implements Serializable {
                 .build();
     }
 
-    public PermissionDto toDto() {
-        return PermissionDto.builder()
-                .id(id)
-                .name(name)
-                .build();
-    }
-
     public static PermissionEntity toEntity(Permission permission) {
         return PermissionEntity.builder()
                 .id(permission.getId())

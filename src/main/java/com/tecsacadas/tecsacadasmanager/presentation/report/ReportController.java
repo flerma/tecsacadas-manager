@@ -2,8 +2,6 @@ package com.tecsacadas.tecsacadasmanager.presentation.report;
 
 import com.tecsacadas.tecsacadasmanager.core.report.ReportService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.http.HttpEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -2,7 +2,7 @@ package com.tecsacadas.tecsacadasmanager.data.db.customer;
 
 
 import com.tecsacadas.tecsacadasmanager.core.address.StateEnum;
-import com.tecsacadas.tecsacadasmanager.presentation.customer.CustomerDto;
+import com.tecsacadas.tecsacadasmanager.core.customer.Customer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -51,20 +51,37 @@ public class CustomerEntity {
 
     private Long cep;
 
-    public CustomerDto toDto() {
-        return CustomerDto.builder()
-                .id(id)
-                .name(name)
-                .cpf(cpf)
-                .rg(rg)
-                .email(email)
-                .phone(phone)
-                .address(address)
-                .number(number)
-                .neighborhood(neighborhood)
-                .city(city)
-                .state(state)
-                .cep(cep)
+    public static Customer toDomain(CustomerEntity customer) {
+        return Customer.builder()
+                .id(customer.getId())
+                .name(customer.getName())
+                .cpf(customer.getCpf())
+                .rg(customer.getRg())
+                .email(customer.getEmail())
+                .phone(customer.getPhone())
+                .address(customer.getAddress())
+                .number(customer.getNumber())
+                .neighborhood(customer.getNeighborhood())
+                .city(customer.getCity())
+                .state(customer.getState())
+                .cep(customer.getCep())
+                .build();
+    }
+
+    public static CustomerEntity toEntity(Customer customer) {
+        return CustomerEntity.builder()
+                .id(customer.getId())
+                .name(customer.getName())
+                .cpf(customer.getCpf())
+                .rg(customer.getRg())
+                .email(customer.getEmail())
+                .phone(customer.getPhone())
+                .address(customer.getAddress())
+                .number(customer.getNumber())
+                .neighborhood(customer.getNeighborhood())
+                .city(customer.getCity())
+                .state(customer.getState())
+                .cep(customer.getCep())
                 .build();
     }
 }

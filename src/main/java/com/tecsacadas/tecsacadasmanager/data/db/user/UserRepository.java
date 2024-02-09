@@ -42,7 +42,7 @@ public class UserRepository {
     }
 
     public List<User> findAll() {
-        return userDao.findAll().stream().map(UserEntity::toDomain).collect(Collectors.toList());
+        return userDao.findAll().stream().map(UserEntity::toDomain).toList();
     }
 
     public Optional<User> findById(Long id) {

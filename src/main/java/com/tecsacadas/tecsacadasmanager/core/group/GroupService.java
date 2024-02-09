@@ -18,11 +18,11 @@ public class GroupService {
     private final GroupRepository groupRepository;
 
     public List<GroupDto> findlAll() {
-        return groupRepository.findAll().stream().map(GroupDto::toDtoStatic).toList();
+        return groupRepository.findAll().stream().map(GroupDto::toDto).toList();
     }
 
     public GroupDto findById(Long id) {
-        return groupRepository.findById(id).map(GroupDto::toDtoStatic)
+        return groupRepository.findById(id).map(GroupDto::toDto)
                 .orElseThrow(() -> new BusinessException("Grupo não encontrado com o ID: " + id));
     }
 
