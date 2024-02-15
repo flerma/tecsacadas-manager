@@ -1,5 +1,6 @@
 package com.tecsacadas.tecsacadasmanager.core.report;
 
+import com.tecsacadas.tecsacadasmanager.infrastructure.error.exception.SaveExcelFileExceptionException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.FillPatternType;
@@ -59,7 +60,7 @@ public class ExcelService {
             workbook.write(outputStream);
             workbook.close();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new SaveExcelFileExceptionException("Erro ao savar o arquivo Excel", e);
         }
     }
 

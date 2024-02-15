@@ -1,10 +1,10 @@
 package com.tecsacadas.tecsacadasmanager.infrastructure.error.exception;
 
-public class RelatorioNotFoundException  extends RuntimeException {
+public class ReportNotFoundException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
-    public RelatorioNotFoundException(String message) {
+    public ReportNotFoundException(String message) {
         super(message);
     }
 }

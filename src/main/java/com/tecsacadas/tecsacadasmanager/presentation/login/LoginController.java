@@ -1,6 +1,7 @@
 package com.tecsacadas.tecsacadasmanager.presentation.login;
 
 import com.tecsacadas.tecsacadasmanager.core.login.LoginService;
+import com.tecsacadas.tecsacadasmanager.presentation.user.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,7 +21,7 @@ public class LoginController {
     private final LoginService loginService;
 
     @PostMapping("/authenticate")
-    public ResponseEntity<Boolean> autenticar(@Valid @RequestBody LoginDto loginDto) {
+    public ResponseEntity<UserDto> autenticar(@Valid @RequestBody LoginDto loginDto) {
         return ResponseEntity.ok(loginService.authenticate(loginDto.getLogin(), loginDto.getPassword()));
     }
 }

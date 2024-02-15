@@ -66,8 +66,8 @@ public class LeadFollowUpService {
         daysOfWeekWithMoreConversionsYearService.generate(year);
     }
 
-    public ByteArrayInputStream generateDownloadDaysOfWeekWithMoreConversionsYear(Integer year) {
-        return daysOfWeekWithMoreConversionsYearService.generate(year);
+    public ByteArrayInputStream generateDownloadDaysOfWeekWithMoreConversionsYear(String identifier, Integer year, Integer month) {
+        return daysOfWeekWithMoreConversionsYearService.generate(identifier, year, month);
     }
 
     public void generateDaysOfWeekWithMoreConversionsMonth(Integer year, Integer month) {

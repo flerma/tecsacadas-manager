@@ -15,6 +15,7 @@ import static com.tecsacadas.tecsacadasmanager.presentation.group.GroupDto.toDto
 @RequiredArgsConstructor
 public class GroupService {
 
+    public static final String GRUPO_NÃO_ENCONTRADO_COM_O_ID = "Grupo não encontrado com o ID: ";
     private final GroupRepository groupRepository;
 
     public List<GroupDto> findlAll() {
@@ -23,7 +24,7 @@ public class GroupService {
 
     public GroupDto findById(Long id) {
         return groupRepository.findById(id).map(GroupDto::toDto)
-                .orElseThrow(() -> new BusinessException("Grupo não encontrado com o ID: " + id));
+                .orElseThrow(() -> new BusinessException(GRUPO_NÃO_ENCONTRADO_COM_O_ID + id));
     }
 
     public GroupDto create(GroupDto group) {
@@ -41,7 +42,7 @@ public class GroupService {
             updatedGroup.setId(id);
             return toDto(groupRepository.save(updatedGroup.toDomain()));
         } else {
-            throw new BusinessException("Grupo não encontrado com o ID: " + id);
+            throw new BusinessException(GRUPO_NÃO_ENCONTRADO_COM_O_ID + id);
         }
     }
 
@@ -50,7 +51,7 @@ public class GroupService {
         if (existingGroup.isPresent()) {
             groupRepository.deleteById(id);
         } else {
-            throw new BusinessException("Grupo não encontrado com o ID: " + id);
+            throw new BusinessException(GRUPO_NÃO_ENCONTRADO_COM_O_ID + id);
         }
     }
 }
