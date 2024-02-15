@@ -21,7 +21,7 @@ public class LoginController {
     private final LoginService loginService;
 
     @PostMapping("/authenticate")
-    public ResponseEntity<UserDto> autenticar(@Valid @RequestBody LoginDto loginDto) {
+    public ResponseEntity<LoginResponseDto> autenticar(@Valid @RequestBody LoginDto loginDto) {
         return ResponseEntity.ok(loginService.authenticate(loginDto.getLogin(), loginDto.getPassword()));
     }
 }
