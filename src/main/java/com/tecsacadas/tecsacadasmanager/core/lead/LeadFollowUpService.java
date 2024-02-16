@@ -1,22 +1,22 @@
 package com.tecsacadas.tecsacadasmanager.core.lead;
 
-import com.tecsacadas.tecsacadasmanager.core.report.ConversionsPerYearMonthService;
-import com.tecsacadas.tecsacadasmanager.core.report.ConversionsPerYearMonthWeekService;
-import com.tecsacadas.tecsacadasmanager.core.report.DaysOfWeekWithMoreConversionsMonthService;
-import com.tecsacadas.tecsacadasmanager.core.report.DaysOfWeekWithMoreConversionsYearService;
 import com.tecsacadas.tecsacadasmanager.core.report.LeadFileImportService;
-import com.tecsacadas.tecsacadasmanager.core.report.ValidXInvalidLeadsPerYearMonthService;
 import com.tecsacadas.tecsacadasmanager.data.db.lead.LeadFollowUpRepository;
+import com.tecsacadas.tecsacadasmanager.infrastructure.error.exception.InvalidReportParametersException;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotNull;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
+
+import static com.tecsacadas.tecsacadasmanager.core.lead.LeadFollowUpReportIdentifiers.getIdentifier;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +29,7 @@ public class LeadFollowUpService {
     private final ConversionsPerYearMonthWeekService conversionsPerYearMonthWeekService;
     private final ValidXInvalidLeadsPerYearMonthService validXInvalidLeadsPerYearMonthService;
     private final LeadFileImportService leadFileImportService;
+    private final LeadFollowUpReportFactory leadFollowUpReportFactory;
 
     @SneakyThrows
     public void importFile() {
@@ -49,7 +50,7 @@ public class LeadFollowUpService {
         leadFollowUpRepository.saveAll(leadFollowUpList);
     }
 
-    public void generateAllReports(Integer year, Integer month) {
+    public void generateAllReports(@NotNull Integer year, @NotNull Integer month) {
 
         CompletableFuture<?>[] tasks = Stream.of(
                 CompletableFuture.runAsync(() -> conversionsPerYearMonthWeekService.generate(year)),
@@ -62,27 +63,37 @@ public class LeadFollowUpService {
         CompletableFuture.allOf(tasks).join();
     }
 
-    public void generateDaysOfWeekWithMoreConversionsYear(Integer year) {
+    public void generateDaysOfWeekWithMoreConversionsYear(@NotNull Integer year) {
         daysOfWeekWithMoreConversionsYearService.generate(year);
     }
 
-    public ByteArrayInputStream generateDownloadDaysOfWeekWithMoreConversionsYear(String identifier, Integer year, Integer month) {
-        return daysOfWeekWithMoreConversionsYearService.generate(identifier, year, month);
-    }
-
-    public void generateDaysOfWeekWithMoreConversionsMonth(Integer year, Integer month) {
+    public void generateDaysOfWeekWithMoreConversionsMonth(@NotNull Integer year,
+                                                           @NotNull Integer month) {
         daysOfWeekWithMoreConversionsMonthService.generate(year, month);
     }
 
-    public void generateConversionsPerYearMonth(Integer year) {
+    public void generateConversionsPerYearMonth(@NotNull Integer year) {
         conversionsPerYearMonthService.generate(year);
     }
 
-    public void generateConversionsPerYearMonthWeek(Integer year) {
+    public void generateConversionsPerYearMonthWeek(@NotNull Integer year) {
         conversionsPerYearMonthWeekService.generate(year);
     }
 
-    public void generateValidXInvalidLeadsPerYearMonth(Integer year, Integer month) {
+    public void generateValidXInvalidLeadsPerYearMonth(@NotNull Integer year,
+                                                       @NotNull Integer month) {
         validXInvalidLeadsPerYearMonthService.generate(year, month);
+    }
+
+    public ByteArrayInputStream downloadReportByIdentifier(@NotNull String identifier,
+                                                           @NotNull Integer year,
+                                                           @Nullable Integer month) {
+        LeadFollowUpReportIdentifiers identifierStrate = getIdentifier(identifier);
+        if (identifierStrate.getIsReportParameterYearAndMonth() && month != null)
+            return identifierStrate.execute(year, month, leadFollowUpReportFactory);
+        else if (identifierStrate.getIsReportParameterYear())
+            return identifierStrate.execute(year, leadFollowUpReportFactory);
+        else
+            throw new InvalidReportParametersException("Parâmetros inválidos para o relatório");
     }
 }

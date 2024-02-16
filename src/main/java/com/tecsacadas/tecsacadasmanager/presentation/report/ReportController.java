@@ -2,6 +2,10 @@ package com.tecsacadas.tecsacadasmanager.presentation.report;
 
 import com.tecsacadas.tecsacadasmanager.core.report.ReportService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,9 +14,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import java.io.ByteArrayInputStream;
 import java.util.List;
 
 @CrossOrigin
@@ -28,17 +35,21 @@ public class ReportController {
         return reportService.getAllReports();
     }
 
-    @GetMapping("/{identifier}/{year}/{month}")
-    public MultipartFile getReportById(@PathVariable String identifier,
-                                       @PathVariable Integer year,
-                                       @PathVariable Integer month) {
-        reportService.generateReportByIdentifier(identifier, year, month);
-//        new ByteArrayResource();
-//        HttpEntity<ByteArrayResource> entity =
+    @GetMapping("/download")
+    public ResponseEntity<InputStreamResource> getReportByIdentifier(
+            @Valid @RequestParam("identifier") @NotNull(message = "Identificador do relatorio deve ser informado") String identifier,
+            @Valid @RequestParam("year") @NotNull(message = "Ano deve ser informado") Integer year,
+            @RequestParam(value = "month", required = false) Integer month) {
+        ByteArrayInputStream in = reportService.generateReportByIdentifier(identifier, year, month);
+        var headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment; filename=report.xlsx");
 
-        return null; // reportService.generateReportByIdentifier(identifier, year, month);
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
+                .body(new InputStreamResource(in));
     }
-
 
     @GetMapping("/{id}")
     public ReportDto getReportById(@PathVariable Long id) {

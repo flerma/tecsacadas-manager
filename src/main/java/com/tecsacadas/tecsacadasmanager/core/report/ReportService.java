@@ -5,8 +5,10 @@ import com.tecsacadas.tecsacadasmanager.data.db.report.ReportRepository;
 import com.tecsacadas.tecsacadasmanager.infrastructure.error.exception.ReportNotFoundException;
 import com.tecsacadas.tecsacadasmanager.presentation.report.ReportDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotNull;
 import java.io.ByteArrayInputStream;
 import java.util.List;
 
@@ -46,7 +48,9 @@ public class ReportService {
         reportRepository.deleteById(id);
     }
 
-    public ByteArrayInputStream generateReportByIdentifier(String identifier, Integer year, Integer month) {
-        return leadFollowUpService.generateDownloadDaysOfWeekWithMoreConversionsYear(identifier, year, month);
+    public ByteArrayInputStream generateReportByIdentifier(@NotNull String identifier,
+                                                           @NotNull Integer year,
+                                                           @Nullable Integer month) {
+        return leadFollowUpService.downloadReportByIdentifier(identifier, year, month);
     }
 }

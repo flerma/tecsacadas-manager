@@ -5,9 +5,7 @@ import com.tecsacadas.tecsacadasmanager.infrastructure.error.exception.InactiveU
 import com.tecsacadas.tecsacadasmanager.infrastructure.error.exception.InvalidUserPasswordException;
 import com.tecsacadas.tecsacadasmanager.infrastructure.error.exception.UserNotFoundException;
 import com.tecsacadas.tecsacadasmanager.presentation.login.LoginResponseDto;
-import com.tecsacadas.tecsacadasmanager.presentation.user.UserDto;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.stereotype.Service;
 
 import static org.apache.commons.lang3.BooleanUtils.isFalse;
