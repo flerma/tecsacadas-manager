@@ -26,8 +26,9 @@ public class ConversionsPerYearMonthWeekService implements LeadFollowUpReportStr
 
     @SneakyThrows
     public void generate(Integer year) {
-        excelService.saveFile(getWorkbook(year), String.format(FILENAME, year));
-        log.info(FILENAME + " gerado com sucesso!", year);
+        var filename = String.format(FILENAME, year);
+        excelService.saveFile(getWorkbook(year), filename);
+        log.info(filename + " gerado com sucesso!");
     }
 
     @Override

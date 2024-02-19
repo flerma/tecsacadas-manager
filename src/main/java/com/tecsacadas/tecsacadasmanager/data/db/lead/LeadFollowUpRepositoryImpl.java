@@ -6,9 +6,12 @@ import com.tecsacadas.tecsacadasmanager.presentation.lead.ConversionsPerYearMont
 import com.tecsacadas.tecsacadasmanager.presentation.lead.DaysOfWeekWithMoreConversionsMonthDto;
 import com.tecsacadas.tecsacadasmanager.presentation.lead.DaysOfWeekWithMoreConversionsYearDto;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+
+import static org.apache.commons.lang3.ObjectUtils.defaultIfNull;
 
 @Repository
 @RequiredArgsConstructor
@@ -52,12 +55,12 @@ class LeadFollowUpRepositoryImpl implements LeadFollowUpRepository {
 
     @Override
     public Long findValidLeads(Integer year, Integer month) {
-        return leadFollowUpDao.findValidLeads(year, month);
+        return defaultIfNull(leadFollowUpDao.findValidLeads(year, month), 0L);
     }
 
     @Override
     public Long findInvalidLeads(Integer year, Integer month) {
-        return leadFollowUpDao.findInvalidLeads(year, month);
+        return defaultIfNull(leadFollowUpDao.findInvalidLeads(year, month), 0L);
     }
 
     @Override

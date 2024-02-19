@@ -34,8 +34,9 @@ public class ValidXInvalidLeadsPerYearMonthService implements LeadFollowUpReport
 
     @SneakyThrows
     public void generate(Integer year, Integer month) {
-        excelService.saveFile(getWorkbook(year, month), String.format(FILENAME, year, month));
-        log.info(FILENAME + " gerado com sucesso!", year, month);
+        var filename = String.format(FILENAME, year, month);
+        excelService.saveFile(getWorkbook(year, month), filename);
+        log.info(filename + " gerado com sucesso!");
     }
 
     @NotNull

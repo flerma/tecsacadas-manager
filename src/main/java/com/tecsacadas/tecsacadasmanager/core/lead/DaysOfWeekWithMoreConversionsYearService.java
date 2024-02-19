@@ -28,7 +28,7 @@ public class DaysOfWeekWithMoreConversionsYearService implements LeadFollowUpRep
 
     @SneakyThrows
     public void generate(Integer year) {
-        String filename = String.format(FILENAME, year);
+        var filename = String.format(FILENAME, year);
         excelService.saveFile(getWorkbook(year), filename);
         log.info(filename + " gerado com sucesso!");
     }
