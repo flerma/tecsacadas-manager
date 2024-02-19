@@ -1,9 +1,8 @@
 package com.tecsacadas.tecsacadasmanager.core.login;
 
 import com.tecsacadas.tecsacadasmanager.core.user.UserService;
-import com.tecsacadas.tecsacadasmanager.infrastructure.error.exception.InactiveUserException;
-import com.tecsacadas.tecsacadasmanager.infrastructure.error.exception.InvalidUserPasswordException;
-import com.tecsacadas.tecsacadasmanager.infrastructure.error.exception.UserNotFoundException;
+import com.tecsacadas.tecsacadasmanager.infrastructure.error.exception.NotFoundException;
+import com.tecsacadas.tecsacadasmanager.infrastructure.error.exception.UnauthorizedException;
 import com.tecsacadas.tecsacadasmanager.presentation.login.LoginResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,13 +20,13 @@ public class LoginService {
         var locatedUser = userService.buscarPorLogin(user);
 
         if (locatedUser.isEmpty())
-            throw new UserNotFoundException("Usuário não encontrado");
+            throw new NotFoundException("Usuário não encontrado");
 
         if (notEqual(password, locatedUser.get().getPassword()))
-            throw new InvalidUserPasswordException("Senha inválida");
+            throw new UnauthorizedException("Senha inválida");
 
         if (isFalse(locatedUser.get().isActive()))
-            throw new InactiveUserException("Usuário inativo");
+            throw new UnauthorizedException("Usuário inativo");
 
         return LoginResponseDto.toDto(locatedUser.get());
     }

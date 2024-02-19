@@ -1,35 +1,18 @@
 package com.tecsacadas.tecsacadasmanager.data.db.group;
 
 import com.tecsacadas.tecsacadasmanager.core.group.Group;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
-@Repository
-@RequiredArgsConstructor
-public class GroupRepository {
+public interface GroupRepository {
+    Optional<Group> findByName(String nome);
 
-    private final GroupDao groupDao;
+    Optional<Group> findById(Long id);
 
-    public Optional<Group> findByName(String nome) {
-        return groupDao.findByName(nome).map(Group::toDomain);
-    }
+    Group save(Group group);
 
-    public Optional<Group> findById(Long id) {
-        return groupDao.findById(id).map(GroupEntity::toDomain);
-    }
+    void deleteById(Long id);
 
-    public Group save(Group group) {
-        return groupDao.save(GroupEntity.toEntity(group)).toDomain();
-    }
-
-    public void deleteById(Long id) {
-        groupDao.deleteById(id);
-    }
-
-    public List<Group> findAll() {
-        return groupDao.findAll().stream().map(GroupEntity::toDomain).toList();
-    }
+    List<Group> findAll();
 }

@@ -2,7 +2,7 @@ package com.tecsacadas.tecsacadasmanager.core.lead;
 
 import com.tecsacadas.tecsacadasmanager.core.report.LeadFileImportService;
 import com.tecsacadas.tecsacadasmanager.data.db.lead.LeadFollowUpRepository;
-import com.tecsacadas.tecsacadasmanager.infrastructure.error.exception.InvalidReportParametersException;
+import com.tecsacadas.tecsacadasmanager.infrastructure.error.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.lang.Nullable;
@@ -94,6 +94,6 @@ public class LeadFollowUpService {
         else if (identifierStrate.getIsReportParameterYear())
             return identifierStrate.execute(year, leadFollowUpReportFactory);
         else
-            throw new InvalidReportParametersException("Parâmetros inválidos para o relatório");
+            throw new BusinessException("Parâmetros inválidos para o relatório");
     }
 }

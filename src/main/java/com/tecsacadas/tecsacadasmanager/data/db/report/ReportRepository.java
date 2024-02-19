@@ -1,31 +1,16 @@
 package com.tecsacadas.tecsacadasmanager.data.db.report;
 
 import com.tecsacadas.tecsacadasmanager.core.report.Report;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
-@Repository
-@RequiredArgsConstructor
-public class ReportRepository {
+public interface ReportRepository {
+    List<Report> findAll();
 
-    private final ReportDao reportDao;
+    Optional<Report> findById(Long id);
 
-    public List<Report> findAll() {
-        return reportDao.findAll().stream().map(ReportEntity::toDomain).toList();
-    }
+    Report save(Report report);
 
-    public Optional<Report> findById(Long id) {
-        return reportDao.findById(id).map(ReportEntity::toDomain);
-    }
-
-    public Report save(Report report) {
-        return reportDao.save(ReportEntity.toEntity(report)).toDomain();
-    }
-
-    public void deleteById(Long id) {
-        reportDao.deleteById(id);
-    }
+    void deleteById(Long id);
 }

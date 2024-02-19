@@ -2,6 +2,7 @@ package com.tecsacadas.tecsacadasmanager.core.customer;
 
 import com.tecsacadas.tecsacadasmanager.data.db.customer.CustomerRepository;
 import com.tecsacadas.tecsacadasmanager.infrastructure.error.exception.BusinessException;
+import com.tecsacadas.tecsacadasmanager.infrastructure.error.exception.NotFoundException;
 import com.tecsacadas.tecsacadasmanager.presentation.customer.CustomerDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -51,7 +52,7 @@ public class CustomerService {
         if (existingCustomer.isPresent()) {
             customerRepository.deleteById(id);
         } else {
-            throw new BusinessException("Cliente não encontrado com o ID: " + id);
+            throw new NotFoundException("Cliente não encontrado com o ID: " + id);
         }
     }
 }

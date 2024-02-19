@@ -1,37 +1,19 @@
 package com.tecsacadas.tecsacadasmanager.data.db.customer;
 
 import com.tecsacadas.tecsacadasmanager.core.customer.Customer;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
-import static com.tecsacadas.tecsacadasmanager.data.db.customer.CustomerEntity.toDomain;
+public interface CustomerRepository {
 
-@Repository
-@RequiredArgsConstructor
-public class CustomerRepository {
+    Optional<Customer> findByCpf(Long cpf);
 
-    private final CustomerDao customerDao;
+    Optional<Customer> findById(Long id);
 
-    public Optional<Customer> findByCpf(Long cpf) {
-        return customerDao.findByCpf(cpf).map(CustomerEntity::toDomain);
-    }
+    Customer save(Customer customer);
 
-    public Optional<Customer> findById(Long id) {
-        return customerDao.findById(id).map(CustomerEntity::toDomain);
-    }
+    void deleteById(Long id);
 
-    public Customer save(Customer customer) {
-        return toDomain(customerDao.save(CustomerEntity.toEntity(customer)));
-    }
-
-    public void deleteById(Long id) {
-        customerDao.deleteById(id);
-    }
-
-    public List<Customer> findAll() {
-        return customerDao.findAll().stream().map(CustomerEntity::toDomain).toList();
-    }
+    List<Customer> findAll();
 }

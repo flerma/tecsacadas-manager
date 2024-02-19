@@ -2,7 +2,7 @@ package com.tecsacadas.tecsacadasmanager.core.report;
 
 import com.tecsacadas.tecsacadasmanager.core.lead.LeadFollowUpService;
 import com.tecsacadas.tecsacadasmanager.data.db.report.ReportRepository;
-import com.tecsacadas.tecsacadasmanager.infrastructure.error.exception.ReportNotFoundException;
+import com.tecsacadas.tecsacadasmanager.infrastructure.error.exception.NotFoundException;
 import com.tecsacadas.tecsacadasmanager.presentation.report.ReportDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.lang.Nullable;
@@ -28,7 +28,7 @@ public class ReportService {
     public ReportDto getReportById(Long id) {
         return reportRepository.findById(id)
                 .map(Report::toDto)
-                .orElseThrow(() -> new ReportNotFoundException("Relatorio não encontrado"));
+                .orElseThrow(() -> new NotFoundException("Relatorio não encontrado"));
     }
 
     public ReportDto createReport(ReportDto reportDto) {
@@ -37,7 +37,7 @@ public class ReportService {
 
     public ReportDto updateReport(Long id, ReportDto reportDto) {
         Report existingReport = reportRepository.findById(id)
-                .orElseThrow(() -> new ReportNotFoundException("Relatorio não encontrado"));
+                .orElseThrow(() -> new NotFoundException("Relatorio não encontrado"));
         existingReport.setSource(reportDto.getSource());
         existingReport.setName(reportDto.getName());
         existingReport.setIdentifier(reportDto.getIdentifier());

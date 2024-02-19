@@ -50,34 +50,29 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorResponse, status);
     }
 
-    @ExceptionHandler(MaxUploadSizeExceededException.class)
-    public ResponseEntity<String> handleMaxSizeException(MaxUploadSizeExceededException exc) {
-        return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("File too large!" + exc.getMaxUploadSize());
+    @ExceptionHandler(BadGatewayException.class)
+    public ResponseEntity<String> handleBadGatewayException(BadGatewayException exc) {
+        return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("EXCEPTION: " + exc.getMessage());
     }
 
-    @ExceptionHandler(FileNotSupportedException.class)
-    public ResponseEntity<String> handleFileNotSupportedException(FileNotSupportedException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
-    }
-
-    @ExceptionHandler(InvalidReportParametersException.class)
-    public ResponseEntity<String> handleInactiveUserPasswordException(InvalidReportParametersException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
-    }
-
-    @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<String> handleUserNotFoundException(UserNotFoundException ex) {
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<String> handleCustomerNotExistException(NotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
-    @ExceptionHandler(InvalidUserPasswordException.class)
-    public ResponseEntity<String> handleInvalidUserPasswordException(InvalidUserPasswordException ex) {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<String> handleException(BusinessException ex) {
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(ex.getMessage());
     }
 
-    @ExceptionHandler(InactiveUserException.class)
-    public ResponseEntity<String> handleInactiveUserPasswordException(InactiveUserException ex) {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
+    @ExceptionHandler(InternalServerErrorException.class)
+    public ResponseEntity<String> handleInternalServerErrorException(InternalServerErrorException ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public ResponseEntity<String> handleMaxSizeException(MaxUploadSizeExceededException exc) {
+        return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Arquivo muito grande! " + exc.getMaxUploadSize());
     }
 
     @Data
