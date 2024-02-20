@@ -30,12 +30,15 @@ public class ReportDto {
 
     private String identifier;
 
+    private String reportName;
+
     public static ReportDto toDto(Report report) {
         return ReportDto.builder()
                 .id(report.getId())
                 .source(report.getSource())
                 .name(report.getName())
                 .identifier(report.getIdentifier())
+                .reportName(report.getReportName())
                 .build();
     }
 
@@ -45,6 +48,7 @@ public class ReportDto {
                 .source(source)
                 .name(name)
                 .identifier(identifier)
+                .reportName(reportName)
                 .build();
     }
 }

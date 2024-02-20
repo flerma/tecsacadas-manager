@@ -26,12 +26,15 @@ public class Report {
 
     private String identifier;
 
+    private String reportName;
+
     public ReportDto toDto() {
         return ReportDto.builder()
                 .id(id)
                 .source(source)
                 .name(name)
                 .identifier(identifier)
+                .reportName(reportName)
                 .build();
     }
 }

@@ -40,15 +40,18 @@ public class ReportController {
             @Valid @RequestParam("identifier") @NotNull(message = "Identificador do relatorio deve ser informado") String identifier,
             @Valid @RequestParam("year") @NotNull(message = "Ano deve ser informado") Integer year,
             @RequestParam(value = "month", required = false) Integer month) {
+
         ByteArrayInputStream in = reportService.generateReportByIdentifier(identifier, year, month);
+        var resource = new InputStreamResource(in);
+
         var headers = new HttpHeaders();
-        headers.add("Content-Disposition", "attachment; filename=report.xlsx");
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=report.xlsx");
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
 
         return ResponseEntity
                 .ok()
                 .headers(headers)
-                .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
-                .body(new InputStreamResource(in));
+                .body(resource);
     }
 
     @GetMapping("/{id}")

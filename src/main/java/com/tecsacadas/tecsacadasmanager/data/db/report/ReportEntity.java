@@ -30,12 +30,15 @@ class ReportEntity {
 
     private String identifier;
 
+    private String reportName;
+
     public Report toDomain() {
         return Report.builder()
                 .id(id)
                 .source(source)
                 .name(name)
                 .identifier(identifier)
+                .reportName(reportName)
                 .build();
     }
 
@@ -45,6 +48,7 @@ class ReportEntity {
                 .source(report.getSource())
                 .name(report.getName())
                 .identifier(report.getIdentifier())
+                .reportName(report.getReportName())
                 .build();
     }
 }
